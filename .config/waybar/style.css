@@ -1,0 +1,19 @@
+* {
+  font-family: "Lato", "Material Symbols Outlined";
+  font-size: 16px;
+}
+
+window {
+  background: none;
+}
+
+window > .horizontal {
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+#window.w {
+  padding-left: 32px;
+}

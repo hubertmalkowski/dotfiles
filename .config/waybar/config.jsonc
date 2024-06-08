@@ -1,0 +1,45 @@
+{
+    "height": 36,
+    "spacing": 32,
+    "modules-left": ["hyprland/workspaces","hyprland/window#w"],
+    "modules-right": ["backlight", "wireplumber","battery", "clock"],
+    "hyprland/window#w": {
+        "format": "{}",
+        "icon": true,
+        "separate-outputs": true
+    },
+    "clock": {
+        "interval": 60,
+        "format": "\udb82\udd54 \u0020 {:%H:%M}",
+        "max-length": 25,
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "month"
+        }
+    },
+    "battery": {
+        "interval": 60,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} \u0020 {capacity}%",
+        "format-icons": ["\udb80\udc7a","\udb80\udc7b","\udb80\udc7c","\udb80\udc7e","\udb80\udc7e","\udb80\udc7f", "\udb80\udc80", "\udb80\udc81", "\udb80\udc82", "\udb80\udc79", "\udb80\udc84"],
+        "max-length": 25
+    },
+    "wireplumber": {
+        "format": "{icon} \u0020 {volume}%",
+        "format-muted": "\udb81\udf5f \u0020 0%",
+        "on-click": "pamixer --default-source -t",
+        "format-icons": ["\udb81\udd7f", "\udb81\udd80", "\udb81\udd7e"]
+    },
+    "backlight": {
+        "device": "intel_backlight",
+        "format": "{icon} \u0020 {percent}%",
+        "format-icons": ["\udb80\udcde","\udb80\udcdf", "\udb80\udce0"]
+    },
+    "hyprland/workspaces": {
+        "active-only":true,
+            "format": "<span font_desc=\"16\">\udb83\udcd1</span> \u0020 {id}"
+    }
+}

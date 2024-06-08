@@ -1,0 +1,6 @@
+@import "./bar.css";
+@import "./colors.css";
+
+* {
+ font-family: "IBM Plex Sans";
+}
