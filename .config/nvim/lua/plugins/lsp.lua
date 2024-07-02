@@ -114,6 +114,7 @@ return {
                             :get_install_path() .. '/node_modules/@vue/language-server'
 
                         local lspconfig = require('lspconfig')
+                        lspconfig.gleam.setup({})
                         if server_name == "tsserver" then
                             lspconfig.tsserver.setup {
                                 init_options = {

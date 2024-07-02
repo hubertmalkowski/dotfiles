@@ -10,6 +10,8 @@ return {
                 json = { { "prettierd", "prettier" } },
                 vue = { { "prettierd", "prettier" } },
                 css = { { "prettierd", "prettier" } },
+                ml = { "ocamlformat" },
+                mli = { "ocamlformat" }
             },
             format_on_save = {
                 -- These options will be passed to conform.format()
