@@ -115,6 +115,7 @@ return {
 
                         local lspconfig = require('lspconfig')
                         lspconfig.gleam.setup({})
+                        lspconfig.clangd.setup({})
                         if server_name == "tsserver" then
                             lspconfig.tsserver.setup {
                                 init_options = {

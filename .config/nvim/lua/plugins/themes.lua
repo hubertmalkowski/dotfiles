@@ -11,12 +11,18 @@ return {
     },
     {
         'projekt0n/github-nvim-theme',
+        config = function()
+                require('github-theme').setup({})
+            -- vim.cmd.colorscheme "github_light"
+            -- vim.cmd.colorscheme "melange"
+            --[[ vim.api.nvim_set_hl(0, "Normal", { bg = "none" }) ]]
+        end
     },
     {
         "rebelot/kanagawa.nvim",
         config = function()
             require("kanagawa").setup({
-                transparent = true, -- do not set background color
+                transparent = false, -- do not set background color
                 keywordStyle = { italic = false, bold = true },
                 colors = {
                     theme = {
@@ -55,7 +61,7 @@ return {
                     }
                 end,
             })
-            vim.cmd.colorscheme "kanagawa-lotus"
+            vim.cmd.colorscheme "kanagawa-dragon"
         end
     },
     {

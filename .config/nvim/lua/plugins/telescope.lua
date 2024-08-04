@@ -5,8 +5,21 @@ return {
         dependencies = { 'nvim-lua/plenary.nvim' },
         config = function()
             local builtin = require('telescope.builtin')
-            vim.keymap.set('n', '<leader>s', builtin.find_files, {})
-            vim.keymap.set('n', '<leader>f', builtin.git_files, {})
+            local utils = require('telescope.utils')
+            vim.keymap.set('n', '<leader>s', builtin.lsp_document_symbols, {})
+            vim.keymap.set('n', '<leader>S', builtin.lsp_workspace_symbols, {})
+
+            vim.keymap.set('n', '<leader>f',
+                function()
+                    local _, ret, _ = utils.get_os_command_output({ 'git', 'rev-parse', '--is-inside-work-tree' })
+                    if ret == 0 then
+                        builtin.git_files()
+                    else
+                        builtin.find_files()
+                    end
+                end
+                , {})
+
             vim.keymap.set('n', '<leader>d', builtin.buffers, {})
             vim.keymap.set('n', '<leader>g', builtin.live_grep)
 
