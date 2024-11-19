@@ -119,9 +119,9 @@ return {
       projects = { -- define project roots
         '~/.config/*',
         '~/dotfiles/*',
-        '~/dev/projects/*',
-        '~/dev/learn/*',
-        '~/dev/work/*',
+        '~/Dev/projects/*',
+        '~/Dev/learn/*',
+        '~/Dev/work/*',
       },
     },
     init = function()
@@ -148,9 +148,9 @@ return {
     cmd = 'Trouble',
     keys = {
       {
-        '<leader>td',
+        '<leader>tp',
         '<cmd>Trouble diagnostics toggle<cr>',
-        desc = '[T]oggle [D]iagnostics',
+        desc = '[T]oggle [P]roblems',
       },
       {
         '<leader>dd',
@@ -219,5 +219,244 @@ _______\|/__________\\;_\\//___\|/________]]
     end,
 
     dependencies = { { 'nvim-tree/nvim-web-devicons' } },
+  },
+  {
+    'nvim-neotest/neotest',
+    dependencies = {
+      'nvim-neotest/nvim-nio',
+      'nvim-lua/plenary.nvim',
+      'antoinemadec/FixCursorHold.nvim',
+      'nvim-treesitter/nvim-treesitter',
+      'marilari88/neotest-vitest',
+      'jfpedroza/neotest-elixir',
+    },
+    config = function()
+      local neotest = require 'neotest'
+      neotest.setup {
+        adapters = {
+          require 'neotest-vitest',
+          require 'neotest-elixir',
+        },
+      }
+
+      vim.keymap.set('n', '<leader>nf', function()
+        neotest.run.run(vim.fn.expand '%')
+      end, {
+        desc = '[N]eotest Test[f]ile',
+      })
+
+      vim.keymap.set('n', '<leader>nt', neotest.run.run, {
+        desc = '[N]eotest nearest [T]est',
+      })
+
+      vim.keymap.set('n', '<leader>no', neotest.output_panel.toggle, {
+        desc = '[N]eotest toggle [O]utput panel',
+      })
+
+      vim.keymap.set('n', '<leasder>ns', neotest.summary.toggle, {
+        desc = '[N]eotest [S]ummary',
+      })
+    end,
+  },
+  {
+    'f-person/git-blame.nvim',
+    -- load the plugin at startup
+    event = 'VeryLazy',
+    -- Because of the keys part, you will be lazy loading this plugin.
+    -- The plugin wil only load once one of the keys is used.
+    -- If you want to load the plugin at startup, add something like event = "VeryLazy",
+    -- or lazy = false. One of both options will work.
+    opts = {
+      -- your configuration comes here
+      -- for example
+      enabled = true, -- if you want to enable the plugin
+      message_template = '<author> - <summary>', -- template for the blame message, check the Message template section for more options
+      date_format = '%m-%d-%Y %H:%M:%S', -- template for the date, check Date format section for more options
+      virtual_text_column = 1, -- virtual text start column, check Start virtual text at column section for more options
+      delay = 1000,
+      message_when_not_committed = '',
+    },
+  },
+  {
+    'kevinhwang91/nvim-ufo',
+    dependencies = {
+      'kevinhwang91/promise-async',
+    },
+    config = function()
+      vim.o.foldcolumn = '0' -- '0' is not bad
+      vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+      vim.o.foldlevelstart = 99
+      vim.o.foldenable = true
+
+      local ufo = require 'ufo'
+
+      ufo.setup()
+
+      vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+      vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+    end,
+  },
+  {
+    'rcarriga/nvim-dap-ui',
+    dependencies = { 'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio' },
+    keys = {
+      { '<leader>tb', '<cmd>DapToggleBreakpoint<cr>', desc = '[T]oggle [B]reakpoint' },
+      {
+        '<leader>td',
+        function()
+          require('dapui').toggle {}
+        end,
+        desc = '[T]oggle [D]ebugger',
+      },
+    },
+    opts = {
+      icons = {
+        expanded = '',
+        collapsed = '',
+        current_frame = '',
+      },
+      controls = {
+        icons = {
+          play = '',
+          step_into = '',
+          step_over = '',
+          step_out = '',
+          step_back = '',
+          run_last = '',
+          terminate = '',
+        },
+      },
+    },
+    config = function(_, opts)
+      local dap = require 'dap'
+      local dapui = require 'dapui'
+      dapui.setup(opts)
+      dap.listeners.after.event_initialized['dapui_config'] = function()
+        dapui.open {}
+      end
+      dap.listeners.before.event_terminated['dapui_config'] = function()
+        dapui.close {}
+      end
+      dap.listeners.before.event_exited['dapui_config'] = function()
+        dapui.close {}
+      end
+
+      dap.configurations.elixir = {
+        {
+          type = 'mix_task',
+          name = 'mix test',
+          task = 'test',
+          taskArgs = { '--trace' },
+          request = 'launch',
+          startApps = true, -- for Phoenix projects
+          projectDir = '${workspaceFolder}',
+          requireFiles = {
+            'test/**/test_helper.exs',
+            'test/**/*_test.exs',
+          },
+        },
+      }
+      dap.adapters.mix_task = {
+        type = 'executable',
+        command = '/home/hubert/.local/share/nvim/mason/packages/elixir-ls/debug_adapter.sh', -- debug_adapter.bat for windows
+        args = {},
+      }
+    end,
+  },
+  {
+    'windwp/nvim-ts-autotag',
+    config = function()
+      require('nvim-ts-autotag').setup()
+    end,
+  },
+  {
+    'ThePrimeagen/harpoon',
+    branch = 'harpoon2',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      local harpoon = require 'harpoon'
+      harpoon:setup()
+      vim.keymap.set('n', '<leader>ha', function()
+        harpoon:list():add()
+      end, {
+        desc = '[H]arpoon [A]dd',
+      })
+
+      vim.keymap.set('n', '<leader>hr', function()
+        harpoon:list():remove()
+      end, {
+        desc = '[H]arpoon [R]remove',
+      })
+
+      vim.keymap.set('n', '<leader>hc', function()
+        harpoon:list():clear()
+      end, {
+        desc = '[H]arpoon [C]lear',
+      })
+
+      vim.keymap.set('n', '<leader>hh', function()
+        harpoon.ui:toggle_quick_menu(harpoon:list())
+      end, {
+        desc = '[H]arpoon Quick Menu',
+      })
+
+      vim.keymap.set('n', '<leader>hq', function()
+        harpoon:list():select(1)
+      end, {
+        desc = '[H]arpoon Select 1',
+      })
+      vim.keymap.set('n', '<leader>hw', function()
+        harpoon:list():select(2)
+      end, {
+
+        desc = '[H]arpoon Select 2',
+      })
+      vim.keymap.set('n', '<leader>he', function()
+        harpoon:list():select(3)
+      end, {
+        desc = '[H]arpoon Select 3',
+      })
+      vim.keymap.set('n', '<leader>hr', function()
+        harpoon:list():select(4)
+      end, {
+        desc = '[H]arpoon Select 4',
+      })
+
+      -- Toggle previous & next buffers stored within Harpoon list
+      vim.keymap.set('n', '<leader>ho', function()
+        harpoon:list():prev()
+      end, {
+        desc = '[H]arpoon Previous',
+      })
+      vim.keymap.set('n', '<leader>hp', function()
+        harpoon:list():next()
+      end, {
+        desc = '[H]arpoo Next',
+      })
+
+      -- basic telescope configuration
+      local conf = require('telescope.config').values
+      local function toggle_telescope(harpoon_files)
+        local file_paths = {}
+        for _, item in ipairs(harpoon_files.items) do
+          table.insert(file_paths, item.value)
+        end
+
+        require('telescope.pickers')
+          .new({}, {
+            prompt_title = 'Harpoon',
+            finder = require('telescope.finders').new_table {
+              results = file_paths,
+            },
+            previewer = conf.file_previewer {},
+            sorter = conf.generic_sorter {},
+          })
+          :find()
+      end
+
+      vim.keymap.set('n', '<leader>hs', function()
+        toggle_telescope(harpoon:list())
+      end, { desc = '[H]arpoon [S]earch' })
+    end,
   },
 }

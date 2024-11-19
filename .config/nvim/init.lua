@@ -17,6 +17,7 @@ vim.wo.wrap = false
 
 -- Make line numbers default
 vim.wo.relativenumber = true
+vim.wo.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
 -- vim.opt.relativenumber = true
@@ -34,6 +35,11 @@ vim.opt.showmode = false
 vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
 end)
+
+vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
+vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
+vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'none' })
+vim.api.nvim_set_hl(0, 'Pmenu', { bg = 'none' })
 
 -- Enable break indent
 vim.opt.breakindent = true
@@ -66,7 +72,7 @@ vim.opt.splitbelow = true
 -- vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- Preview substitutions live, as you type!
-vim.opt.inccommand = 'split'
+-- vim.opt.inccommand = 'split'
 
 -- Show which line your cursor is on
 vim.opt.cursorline = true
@@ -198,11 +204,12 @@ require('lazy').setup({
       require('which-key').add {
         { '<leader>c', group = '[C]ode' },
         { '<leader>d', group = '[D]ocument' },
-        { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
         { '<leader>w', group = '[W]orkspace' },
         { '<leader>t', group = '[T]oggle' },
         { '<leader>g', group = '[G]it' },
+        { '<leader>n', group = '[N]eotest' },
+        { '<leader>h', group = '[H]arpoon' },
       }
     end,
   },
@@ -401,7 +408,7 @@ require('lazy').setup({
 
           -- Rename the variable under your cursor.
           --  Most Language Servers support renaming across files, etc.
-          map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+          -- map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
 
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
@@ -458,6 +465,10 @@ require('lazy').setup({
       --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+      capabilities.textDocument.foldingRange = {
+        dynamicRegistration = false,
+        lineFoldingOnly = true,
+      }
 
       local tailwind_filetypes = require('lspconfig.configs')['tailwindcss']
 
@@ -478,9 +489,8 @@ require('lazy').setup({
           },
           filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
         },
-        gopls = {},
         tailwindcss = {
-          filetypes = { 'html', 'elixir', 'eelixir', 'heex', 'vue', 'ts', 'tsx', 'js', 'jsx' },
+          filetypes = { 'html', 'elixir', 'eelixir', 'heex', 'vue', 'ts', 'tsx', 'js', 'jsx', 'css', 'astro' },
           init_options = {
             userLanguages = {
               elixir = 'html-eex',
@@ -579,6 +589,14 @@ require('lazy').setup({
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
+        javascript = { { 'prettierd', 'prettier' } },
+        typescript = { { 'prettierd', 'prettier' } },
+        vue = { { 'prettierd', 'prettier' } },
+        astro = { { 'prettierd', 'prettier' } },
+        html = { { 'prettierd', 'prettier' } },
+        json = { { 'prettierd', 'prettier' } },
+        css = { { 'prettierd', 'prettier' } },
+        erlang = { 'erlfmt' },
       },
     },
   },
@@ -707,6 +725,10 @@ require('lazy').setup({
     init = function()
       vim.cmd.colorscheme 'oxocarbon'
       vim.cmd.hi 'Comment gui=none'
+
+      local oxocarbon = require 'oxocarbon'
+      vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#161616', bg = '#161616' })
+      vim.api.nvim_set_hl(0, 'VertSplit', { fg = '#161616', bg = '#161616' })
     end,
   },
   -- Highlight todo, notes, etc in comments
