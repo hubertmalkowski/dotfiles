@@ -209,7 +209,7 @@ require('lazy').setup({
         { '<leader>t', group = '[T]oggle' },
         { '<leader>g', group = '[G]it' },
         { '<leader>n', group = '[N]eotest' },
-        { '<leader>h', group = '[H]arpoon' },
+        { '<leader>h', group = '[H]' },
       }
     end,
   },
@@ -490,7 +490,7 @@ require('lazy').setup({
           filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
         },
         tailwindcss = {
-          filetypes = { 'html', 'elixir', 'eelixir', 'heex', 'vue', 'ts', 'tsx', 'js', 'jsx', 'css', 'astro' },
+          filetypes = { 'html', 'elixir', 'eelixir', 'heex', 'vue', 'ts', 'tsx', 'js', 'jsx', 'css', 'astro', 'eruby' },
           init_options = {
             userLanguages = {
               elixir = 'html-eex',
@@ -596,6 +596,7 @@ require('lazy').setup({
         html = { { 'prettierd', 'prettier' } },
         json = { { 'prettierd', 'prettier' } },
         css = { { 'prettierd', 'prettier' } },
+        eruby = { { 'prettierd', 'prettier' } },
         erlang = { 'erlfmt' },
       },
     },
@@ -681,7 +682,7 @@ require('lazy').setup({
           -- Manually trigger a completion from nvim-cmp.
           --  Generally you don't need this, because nvim-cmp will display
           --  completions whenever it has completion options available.
-          ['<C-Space>'] = cmp.mapping.complete {},
+          -- ['<C-Space>'] = cmp.mapping.complete {},
 
           -- Think of <c-l> as moving to the right of your snippet expansion.
           --  So if you have a snippet that's like:

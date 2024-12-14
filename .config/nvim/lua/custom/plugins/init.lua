@@ -14,19 +14,7 @@ return {
     end,
   },
   {
-    'akinsho/toggleterm.nvim',
-    version = '*',
-    opts = {
-      direction = 'float',
-      insert_mappings = false, -- whether or not the open mapping applies in insert mode
-      open_mapping = '<leader>tt',
-    },
-  },
-  {
     'tpope/vim-fugitive',
-    dependencies = {
-      'akinsho/toggleterm.nvim', -- optional 'nvim-tree/nvim-web-devicons', -- optional
-    },
     config = function()
       vim.keymap.set('n', '<leader>gs', vim.cmd.G, {
         desc = '[G]it [S]tatus',
@@ -111,38 +99,6 @@ return {
     -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
   },
   {
-    'coffebar/neovim-project',
-    opts = {
-      last_session_on_startup = false,
-      -- Dashboard mode prevent session autoload on startup
-      dashboard_mode = true,
-      projects = { -- define project roots
-        '~/.config/*',
-        '~/dotfiles/*',
-        '~/Dev/projects/*',
-        '~/Dev/learn/*',
-        '~/Dev/work/*',
-      },
-    },
-    init = function()
-      -- enable saving the state of plugins in the session
-      vim.opt.sessionoptions:append 'globals' -- save global variables that start with an uppercase letter and contain at least one lowercase letter.
-      vim.keymap.set('n', '<leader>sa', '<cmd>Telescope neovim-project discover<CR>', {
-        desc = '[S]earch [P]rojects',
-      })
-      vim.keymap.set('n', '<leader>sp', '<cmd>Telescope neovim-project history<CR>', {
-        desc = '[S]earch [R]ecent projects',
-      })
-    end,
-    dependencies = {
-      { 'nvim-lua/plenary.nvim' },
-      { 'nvim-telescope/telescope.nvim', tag = '0.1.4' },
-      { 'Shatur/neovim-session-manager' },
-    },
-    lazy = false,
-    priority = 100,
-  },
-  {
     'folke/trouble.nvim',
     opts = {}, -- for default options, refer to the configuration section for custom setup.
     cmd = 'Trouble',
@@ -172,6 +128,7 @@ return {
   {
     'nvimdev/dashboard-nvim',
     event = 'VimEnter',
+    enabled = false,
     config = function()
       local header = [[                   
                                  .-'~~~-. 
@@ -458,5 +415,42 @@ _______\|/__________\\;_\\//___\|/________]]
         toggle_telescope(harpoon:list())
       end, { desc = '[H]arpoon [S]earch' })
     end,
+  },
+  {
+    'zbirenbaum/copilot.lua',
+    cmd = 'Copilot',
+    event = 'InsertEnter',
+    opts = {
+      suggestion = {
+        auto_trigger = true,
+        keymap = {
+          -- Accept on alt + space
+          accept = '<C-Space>',
+        },
+      },
+    },
+    keymap = {
+      '<leader>tc',
+      function()
+        require('copilot.suggestion').toggle_auto_trigger()
+      end,
+      desc = '[T]oggle [C]opilot',
+    },
+  },
+  -- lazy.nvim
+  {
+    'folke/snacks.nvim',
+    keys = {
+      {
+        '<leader>gl',
+        function()
+          require('snacks').lazygit()
+        end,
+        desc = '[G]it [L]azy',
+      },
+    },
+    opts = {
+      lazygit = {},
+    },
   },
 }
