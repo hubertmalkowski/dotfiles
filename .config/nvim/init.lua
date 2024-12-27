@@ -36,10 +36,10 @@ vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
 end)
 
-vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
-vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
-vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'none' })
-vim.api.nvim_set_hl(0, 'Pmenu', { bg = 'none' })
+-- vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
+-- vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
+-- vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'none' })
+-- vim.api.nvim_set_hl(0, 'Pmenu', { bg = 'none' })
 
 -- Enable break indent
 vim.opt.breakindent = true
@@ -406,6 +406,14 @@ require('lazy').setup({
           --  Similar to document symbols, except searches over your entire project.
           map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
+          vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
+            border = 'rounded',
+          })
+          vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signatureHelp, {
+            border = 'rounded',
+          })
+          vim.diagnostic.config { float = { border = 'single' } }
+
           -- Rename the variable under your cursor.
           --  Most Language Servers support renaming across files, etc.
           -- map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
@@ -477,7 +485,7 @@ require('lazy').setup({
       local mason_registry = require 'mason-registry'
       local vue_language_server_path = mason_registry.get_package('vue-language-server'):get_install_path() .. '/node_modules/@vue/language-server'
       local servers = {
-        tsserver = {
+        ts_ls = {
           init_options = {
             plugins = {
               {
@@ -589,14 +597,16 @@ require('lazy').setup({
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
-        javascript = { { 'prettierd', 'prettier' } },
-        typescript = { { 'prettierd', 'prettier' } },
-        vue = { { 'prettierd', 'prettier' } },
-        astro = { { 'prettierd', 'prettier' } },
-        html = { { 'prettierd', 'prettier' } },
-        json = { { 'prettierd', 'prettier' } },
-        css = { { 'prettierd', 'prettier' } },
-        eruby = { { 'prettierd', 'prettier' } },
+        javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        typescript = { 'prettierd', 'prettier', stop_after_first = true },
+        typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+        javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+        vue = { 'prettierd', 'prettier', stop_after_first = true },
+        astro = { 'prettierd', 'prettier', stop_after_first = true },
+        html = { 'prettierd', 'prettier', stop_after_first = true },
+        json = { 'prettierd', 'prettier', stop_after_first = true },
+        css = { 'prettierd', 'prettier', stop_after_first = true },
+        eruby = { 'erb_format' },
         erlang = { 'erlfmt' },
       },
     },
@@ -644,6 +654,34 @@ require('lazy').setup({
       local luasnip = require 'luasnip'
       luasnip.config.setup {}
 
+      local cmp_kinds = {
+        Text = '  ',
+        Method = '  ',
+        Function = '  ',
+        Constructor = '  ',
+        Field = '  ',
+        Variable = '  ',
+        Class = '  ',
+        Interface = '  ',
+        Module = '  ',
+        Property = '  ',
+        Unit = '  ',
+        Value = '  ',
+        Enum = '  ',
+        Keyword = '  ',
+        Snippet = '  ',
+        Color = '  ',
+        File = '  ',
+        Reference = '  ',
+        Folder = '  ',
+        EnumMember = '  ',
+        Constant = '  ',
+        Struct = '  ',
+        Event = '  ',
+        Operator = '  ',
+        TypeParameter = '  ',
+      }
+
       cmp.setup {
         snippet = {
           expand = function(args)
@@ -651,7 +689,17 @@ require('lazy').setup({
           end,
         },
         completion = { completeopt = 'menu,menuone,noinsert' },
-
+        formatting = {
+          fields = { 'kind', 'abbr' },
+          format = function(_, vim_item)
+            vim_item.kind = cmp_kinds[vim_item.kind] or ''
+            return vim_item
+          end,
+        },
+        window = {
+          completion = cmp.config.window.bordered(winhighlight),
+          documentation = cmp.config.window.bordered(winhighlight),
+        },
         -- For an understanding of why these mappings were
         -- chosen, you will need to read `:help ins-completion`
         --
@@ -720,18 +768,22 @@ require('lazy').setup({
     end,
   },
 
-  { -- You can easily change to a different colorscheme.
-    'nyoom-engineering/oxocarbon.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
+  {
+    'bluz71/vim-moonfly-colors',
+    priority = 1000,
     init = function()
-      vim.cmd.colorscheme 'oxocarbon'
-      vim.cmd.hi 'Comment gui=none'
+      -- Lua initialization file
+      vim.g.moonflyWinSeparator = 0
+      vim.g.moonflyNormalFloat = true
+      vim.cmd.colorscheme 'moonfly'
 
-      local oxocarbon = require 'oxocarbon'
-      vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#161616', bg = '#161616' })
-      vim.api.nvim_set_hl(0, 'VertSplit', { fg = '#161616', bg = '#161616' })
+      local palette = require('moonfly').palette
+
+      vim.api.nvim_set_hl(0, 'WinSeparator', { fg = palette.bg, bg = palette.bg })
+      vim.api.nvim_set_hl(0, 'VertSplit', { fg = palette.bg, bg = palette.bg })
     end,
   },
+
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
   { -- Collection of various small independent plugins/modules

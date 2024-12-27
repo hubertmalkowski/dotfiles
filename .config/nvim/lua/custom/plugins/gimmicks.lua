@@ -8,7 +8,7 @@ return {
         lightbulb = { virtual_text = false },
         ui = { code_action = '' },
       }
-      vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<CR>')
+      -- vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<CR>')
       vim.keymap.set('n', '<leader>cr', '<cmd>Lspsaga rename<CR>', {
         desc = '[R]ename',
       })
@@ -18,6 +18,35 @@ return {
       'nvim-treesitter/nvim-treesitter', -- optional 'nvim-tree/nvim-web-devicons', -- optional
     },
   },
+  -- {
+  --   'lewis6991/hover.nvim',
+  --   event = 'LspAttach',
+  --   opts = {
+  --     init = function()
+  --       require 'hover.providers.lsp'
+  --     end,
+  --     preview_opts = {
+  --       border = 'single',
+  --     },
+  --     -- Whether the contents of a currently open hover window should be moved
+  --     -- to a :h preview-window when pressing the hover keymap.
+  --     preview_window = false,
+  --     title = true,
+  --     mouse_providers = {
+  --       'LSP',
+  --     },
+  --     mouse_delay = 1000,
+  --   },
+  --   keys = {
+  --     {
+  --       'n',
+  --       'K',
+  --       function()
+  --         require('hover').hover()
+  --       end,
+  --     },
+  --   },
+  -- },
   {
     'nvim-treesitter/nvim-treesitter-context',
     config = function()
@@ -27,11 +56,12 @@ return {
     end,
   },
 
-  {
-    'MeanderingProgrammer/render-markdown.nvim',
-    opts = {},
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
-  },
+  -- {
+  --   'MeanderingProgrammer/render-markdown.nvim',
+  --   opts = {},
+  --   enable = false,
+  --   dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
+  -- },
 
   {
     'windwp/nvim-ts-autotag',
