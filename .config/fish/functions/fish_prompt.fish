@@ -73,7 +73,7 @@ function fish_prompt
         set arrow "$arrow_color# "
     end
 
-    set -l cwd $cyan(prompt_pwd)
+    set -l cwd $yellow(prompt_pwd)
 
     set -l repo_info
     if set -l repo_type (_repo_type)
@@ -83,7 +83,7 @@ function fish_prompt
         if _is_repo_dirty $repo_type
             set repo_info "$red$repo_info$red 󰅙 "
         else
-            set repo_info "$green$repo_info$green "
+            set repo_info "$green $repo_info$green "
         end
 
         set repo_info " $blue ($repo_info$blue)"
