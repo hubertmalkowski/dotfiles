@@ -160,7 +160,10 @@ return {
       require('mason-lspconfig').setup {
         handlers = {
           function(server_name)
-            if server_name == 'tailwindcss' then
+            if server_name == 'clangd' then
+              vim.keymap.set('n', '<leader>ch', '<cmd>ClangdSwitchSourceHeader<CR>', {
+                desc = '[C] toggle [H]eader',
+              })
             end
 
             local server = servers[server_name] or {}
