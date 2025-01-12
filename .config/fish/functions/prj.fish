@@ -23,6 +23,7 @@ function prj --description "Project jumper"
 
     if in_tmux
         tmux switch -t $sessname || tmux new -d -s $sessname tmux_dev
+        tmux switch -t $sessname
     else
         tmux attach -t $sessname || tmux new -s $sessname tmux_dev
     end

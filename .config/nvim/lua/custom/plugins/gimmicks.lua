@@ -18,41 +18,43 @@ return {
       'nvim-treesitter/nvim-treesitter', -- optional 'nvim-tree/nvim-web-devicons', -- optional
     },
   },
-  -- {
-  --   'lewis6991/hover.nvim',
-  --   event = 'LspAttach',
-  --   opts = {
-  --     init = function()
-  --       require 'hover.providers.lsp'
-  --     end,
-  --     preview_opts = {
-  --       border = 'single',
-  --     },
-  --     -- Whether the contents of a currently open hover window should be moved
-  --     -- to a :h preview-window when pressing the hover keymap.
-  --     preview_window = false,
-  --     title = true,
-  --     mouse_providers = {
-  --       'LSP',
-  --     },
-  --     mouse_delay = 1000,
-  --   },
-  --   keys = {
-  --     {
-  --       'n',
-  --       'K',
-  --       function()
-  --         require('hover').hover()
-  --       end,
-  --     },
-  --   },
-  -- },
   {
     'nvim-treesitter/nvim-treesitter-context',
     config = function()
       require('treesitter-context').setup {
         mode = 'cursor',
       }
+    end,
+  },
+  {
+    'kevinhwang91/nvim-ufo',
+    dependencies = {
+      'kevinhwang91/promise-async',
+    },
+    config = function()
+      local ftMap = {
+        vue = { 'treesitter', 'ident' },
+      }
+      vim.o.foldcolumn = '0' -- '0' is not bad
+      vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+      vim.o.foldlevelstart = 99
+      vim.o.foldenable = true
+
+      local ufo = require 'ufo'
+
+      ufo.setup {
+        open_fold_hl_timeout = 150,
+        provider_selector = function(bufnr, filetype, buftype)
+          return ftMap[filetype]
+        end,
+        close_fold_kinds_for_ft = {
+          default = { 'imports', 'comment' },
+        },
+        enable_get_fold_virt_text = false,
+      }
+
+      vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+      vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
     end,
   },
 

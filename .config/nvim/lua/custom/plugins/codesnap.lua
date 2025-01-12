@@ -8,10 +8,11 @@ return {
     },
     opts = {
       save_path = '~/Pictures',
-      has_breadcrumbs = false,
+      has_breadcrumbs = true,
       code_font_family = 'Iosevka SS14',
       bg_theme = 'grape',
       mac_window_bar = false,
+      bg_padding = 8,
     },
   },
 }

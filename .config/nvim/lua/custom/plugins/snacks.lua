@@ -17,7 +17,11 @@ return {
     },
   },
   opts = {
-    lazygit = {},
+    lazygit = {
+      wo = {
+        winhighlight = 'NormalFloat:Transparent',
+      },
+    },
     zen = {
       toggles = {
         dim = false,
