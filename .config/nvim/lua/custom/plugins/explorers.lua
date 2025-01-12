@@ -109,7 +109,7 @@ return {
         end
 
         require('telescope.pickers')
-          .new({}, {
+          .new(require('telescope.themes').get_dropdown(), {
             prompt_title = 'Harpoon',
             finder = require('telescope.finders').new_table {
               results = file_paths,
