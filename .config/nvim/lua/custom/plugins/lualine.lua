@@ -102,9 +102,10 @@ return {
           },
         },
         lualine_c = {
-          '%=', --[[ add your center compoentnts here in place of this comment ]]
+          -- '%=', --[[ add your center compoentnts here in place of this comment ]]
         },
         lualine_x = {
+          -- require('doing').status,
           'branch',
         },
         lualine_y = { 'filetype', 'progress' },
