@@ -4,6 +4,9 @@ return { -- Useful plugin to show you pending keybinds.
   config = function() -- This is the function that runs, AFTER loading
     require('which-key').setup {
       preset = 'helix',
+      win = {
+        padding = { 1, 1 },
+      },
     }
 
     -- Document existing key chains

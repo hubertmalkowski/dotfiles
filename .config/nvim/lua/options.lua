@@ -13,6 +13,7 @@ end)
 vim.opt.breakindent = true
 
 vim.opt.undofile = true
+vim.opt.winblend = 10
 
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
@@ -29,3 +30,4 @@ vim.opt.splitbelow = true
 vim.opt.cursorline = true
 
 vim.opt.scrolloff = 10
+vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#1e222a' })

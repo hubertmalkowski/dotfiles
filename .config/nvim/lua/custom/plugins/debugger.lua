@@ -43,6 +43,9 @@ return {
       dapui.close {}
     end
 
+    vim.cmd 'hi DapBreakpointColor guifg=#fa4848'
+    vim.fn.sign_define('DapBreakpoint', { text = '󰮕 ', texthl = 'DapBreakpointColor', linehl = '', numhl = '' })
+
     dap.configurations.elixir = {
       {
         type = 'mix_task',

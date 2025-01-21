@@ -1,6 +1,7 @@
 return {
   {
     'tpope/vim-fugitive',
+    enabled = false,
     config = function()
       vim.keymap.set('n', '<leader>gs', vim.cmd.G, {
         desc = '[G]it [S]tatus',
@@ -29,6 +30,41 @@ return {
       virtual_text_column = 1, -- virtual text start column, check Start virtual text at column section for more options
       delay = 1000,
       message_when_not_committed = '',
+    },
+  },
+
+  {
+    'NeogitOrg/neogit',
+    dependencies = {
+      'nvim-lua/plenary.nvim', -- required
+      'sindrets/diffview.nvim', -- optional - Diff integration
+
+      -- Only one of these is needed.
+      -- "nvim-telescope/telescope.nvim", -- optional
+      -- "ibhagwan/fzf-lua",              -- optional
+      -- "echasnovski/mini.pick",         -- optional
+    },
+    config = true,
+    opts = {
+      -- kind = 'floating',
+      graph_style = 'kitty',
+    },
+    keys = {
+      {
+        '<leader>gs',
+        function()
+          require('neogit').open()
+        end,
+        desc = '[G]it [S]tatus',
+      },
+
+      {
+        '<leader>gc',
+        function()
+          require('neogit').open { 'commit' }
+        end,
+        desc = '[G]it [C]ommit',
+      },
     },
   },
 

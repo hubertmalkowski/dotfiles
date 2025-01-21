@@ -69,9 +69,10 @@ return {
         },
         completion = { completeopt = 'menu,menuone,noinsert' },
         formatting = {
+          expandable_indicator = false,
           fields = { 'kind', 'abbr' },
           format = function(entry, vim_item)
-            vim_item.kind = cmp_kinds[vim_item.kind] or ''
+            vim_item.kind = cmp_kinds[vim_item.kind] and ' ' .. cmp_kinds[vim_item.kind] or ''
 
             local highlights_info = require('colorful-menu').cmp_highlights(entry)
 
@@ -84,10 +85,10 @@ return {
             return vim_item
           end,
         },
-        window = {
-          completion = cmp.config.window.bordered(winhighlight),
-          documentation = cmp.config.window.bordered(winhighlight),
-        },
+        -- window = {
+        -- completion = cmp.config.window.bordered(winhighlight),
+        -- documentation = cmp.config.window.bordered(winhighlight),
+        -- },
 
         mapping = cmp.mapping.preset.insert {
           -- Select the [n]ext item

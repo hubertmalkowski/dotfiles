@@ -82,7 +82,6 @@ return {
   config = function()
     require('lualine').setup {
       options = {
-        theme = theme,
         section_separators = '',
         component_separators = '',
       },
@@ -113,7 +112,7 @@ return {
           -- 'location',
         },
       },
-      inactive_sections = { lualine_a = { 'filename' }, lualine_b = {}, lualine_c = {}, lualine_x = {}, lualine_y = {}, lualine_z = { 'location' } },
+      inactive_sections = { lualine_a = {}, lualine_b = { 'filename' }, lualine_c = {}, lualine_x = {}, lualine_y = {}, lualine_z = { 'location' } },
       tabline = {},
       extensions = {},
     }

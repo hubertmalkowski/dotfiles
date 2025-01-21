@@ -11,12 +11,12 @@ return {
         columns = {
           'icon',
         },
+        watch_for_changes = true,
         keymaps = {
           ['g?'] = { 'actions.show_help', mode = 'n' },
           ['<CR>'] = 'actions.select',
           ['<C-p>'] = 'actions.preview',
           ['<C-c>'] = { 'actions.close', mode = 'n' },
-          ['<C-l>'] = 'actions.refresh',
           ['-'] = { 'actions.parent', mode = 'n' },
           ['_'] = { 'actions.open_cwd', mode = 'n' },
           ['`'] = { 'actions.cd', mode = 'n' },
@@ -101,27 +101,31 @@ return {
       })
 
       -- basic telescope configuration
-      local conf = require('telescope.config').values
-      local function toggle_telescope(harpoon_files)
+      -- local conf = require('telescope.config').values
+      local function toggle_picker(harpoon_files)
         local file_paths = {}
         for _, item in ipairs(harpoon_files.items) do
           table.insert(file_paths, item.value)
         end
 
-        require('telescope.pickers')
-          .new(require('telescope.themes').get_dropdown(), {
-            prompt_title = 'Harpoon',
-            finder = require('telescope.finders').new_table {
-              results = file_paths,
-            },
-            previewer = conf.file_previewer {},
-            sorter = conf.generic_sorter {},
-          })
-          :find()
+        require('snacks').picker.pick('harpoon', {
+          items = file_paths,
+        })
+
+        -- require('telescope.pickers')
+        --   .new(require('telescope.themes').get_dropdown(), {
+        --     prompt_title = 'Harpoon',
+        --     finder = require('telescope.finders').new_table {
+        --       results = file_paths,
+        --     },
+        --     previewer = conf.file_previewer {},
+        --     sorter = conf.generic_sorter {},
+        --   })
+        --   :find()
       end
 
       vim.keymap.set('n', '<leader>hs', function()
-        toggle_telescope(harpoon:list())
+        toggle_picker(harpoon:list())
       end, { desc = '[H]arpoon [S]earch' })
     end,
   },
