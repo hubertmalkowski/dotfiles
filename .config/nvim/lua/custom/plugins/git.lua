@@ -46,7 +46,7 @@ return {
     },
     config = true,
     opts = {
-      -- kind = 'floating',
+      kind = 'floating',
       graph_style = 'kitty',
     },
     keys = {
@@ -61,7 +61,7 @@ return {
       {
         '<leader>gc',
         function()
-          require('neogit').open { 'commit' }
+          require('neogit').open { 'commit c' }
         end,
         desc = '[G]it [C]ommit',
       },
