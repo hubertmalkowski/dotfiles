@@ -5,7 +5,7 @@ return { -- Useful plugin to show you pending keybinds.
     require('which-key').setup {
       preset = 'helix',
       win = {
-        padding = { 1, 1 },
+        padding = { 2, 6 },
       },
     }
 

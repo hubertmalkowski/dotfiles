@@ -87,7 +87,7 @@ return {
       },
       sections = {
         lualine_a = {
-          'mode',
+          -- 'mode',
         },
         lualine_b = {
           {
@@ -96,7 +96,7 @@ return {
               if dir then
                 return vim.fn.fnamemodify(dir, ':~')
               end
-              return get_file_with_directory()
+              return '  ' .. get_file_with_directory()
             end,
           },
         },

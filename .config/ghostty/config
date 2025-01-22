@@ -1,12 +1,13 @@
 theme = light:oxocarbon-light, dark:Oxocarbon
 font-family = Iosevka SS14
-# font-family = JetBrainsMono Nerd Font
-font-size = 14
 
+font-size = 13
+adjust-cell-height = 21%
+adjust-cursor-height = 21%
+
+window-decoration = false
 adw-toolbar-style = flat
 window-theme = ghostty
-
-window-padding-x = 8
 
 keybind = alt+one=unbind
 keybind = alt+two=unbind
@@ -17,5 +18,3 @@ keybind = alt+six=unbind
 keybind = alt+seven=unbind
 keybind = alt+eight=unbind
 keybind = alt+nine=unbind
-
-

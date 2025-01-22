@@ -35,6 +35,7 @@ return {
 
   {
     'NeogitOrg/neogit',
+
     dependencies = {
       'nvim-lua/plenary.nvim', -- required
       'sindrets/diffview.nvim', -- optional - Diff integration
@@ -44,10 +45,27 @@ return {
       -- "ibhagwan/fzf-lua",              -- optional
       -- "echasnovski/mini.pick",         -- optional
     },
-    config = true,
+    -- config = true,
     opts = {
       kind = 'floating',
       graph_style = 'kitty',
+      process_spinner = true,
+      commit_editor = {
+        kind = 'tab',
+        show_staged_diff = true,
+        staged_diff_split_kind = 'floating',
+        spell_check = true,
+      },
+      commit_select_view = {
+        kind = 'floating',
+      },
+      commit_view = {
+        kind = 'floating',
+        verify_commit = vim.fn.executable 'gpg' == 1, -- Can be set to true or false, otherwise we try to find the binary
+      },
+      popup = {
+        kind = 'floating',
+      },
     },
     keys = {
       {
@@ -61,9 +79,17 @@ return {
       {
         '<leader>gc',
         function()
-          require('neogit').open { 'commit c' }
+          require('neogit').open { 'commit' }
         end,
         desc = '[G]it [C]ommit',
+      },
+
+      {
+        '<leader>gg',
+        function()
+          require('neogit').open { 'log' }
+        end,
+        desc = '[G]it [G]raph',
       },
     },
   },
@@ -78,6 +104,7 @@ return {
         topdelete = { text = '‾' },
         changedelete = { text = '~' },
       },
+      signs_staged_enable = false,
     },
   },
 }

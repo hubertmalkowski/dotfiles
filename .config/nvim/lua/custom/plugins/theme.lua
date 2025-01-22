@@ -58,12 +58,11 @@ end
 return {
   {
     'nyoom-engineering/oxocarbon.nvim',
-
+    enabled = false,
     init = function()
       local oxocarbon = require('oxocarbon').oxocarbon
-      vim.cmd 'colorscheme oxocarbon'
+      -- vim.cmd 'colorscheme oxocarbon'
       set_background_based_on_os()
-      vim.api.nvim_set_hl(0, 'FloatBorder', { fg = oxocarbon.base00, bg = oxocarbon.base00 })
       -- vim.api.nvim_set_hl(0, 'NormalFloat', { fg = oxocarbon.base01, bg = oxocarbon.base01 })
       -- vim.api.nvim_set_hl(0, 'TelescopeNormal', { fg = oxocarbon.base01, bg = oxocarbon.base01 })
       on_color_change(function(bg)
@@ -72,11 +71,17 @@ return {
           vim.api.nvim_set_hl(0, 'LspReferenceRead', { fg = oxocarbon.none, bg = '#e6e8f5' })
           vim.api.nvim_set_hl(0, 'LspReferenceWrite', { fg = oxocarbon.none, bg = '#e6e8f5' })
           vim.api.nvim_set_hl(0, 'Comment', { fg = '#6f6f6f', bg = oxocarbon.none, italic = true })
+          vim.api.nvim_set_hl(0, '@Keyword', { fg = '#0f62fe', bg = oxocarbon.none })
+          vim.api.nvim_set_hl(0, '@constant', { fg = oxocarbon.base11, bg = oxocarbon.none })
+          vim.api.nvim_set_hl(0, 'String', { fg = oxocarbon.base07, bg = oxocarbon.none })
           vim.api.nvim_set_hl(0, 'NonText', { fg = '#6f6f6f', bg = oxocarbon.none })
+          vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = oxocarbon.base04, bg = oxocarbon.none })
+          vim.api.nvim_set_hl(0, 'LineNr', { fg = oxocarbon.base04, bg = oxocarbon.none })
         else
           vim.api.nvim_set_hl(0, 'LspReferenceText', { fg = oxocarbon.none, bg = '#304f8d' })
           vim.api.nvim_set_hl(0, 'LspReferenceRead', { fg = oxocarbon.none, bg = '#304f8d' })
           vim.api.nvim_set_hl(0, 'LspReferenceWrite', { fg = oxocarbon.none, bg = '#304f8d' })
+          vim.api.nvim_set_hl(0, '@Keyword', { fg = oxocarbon.base11, bg = oxocarbon.none })
           vim.api.nvim_set_hl(0, 'NonText', { fg = oxocarbon.base03, bg = oxocarbon.none })
         end
       end)

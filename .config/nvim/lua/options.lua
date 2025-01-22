@@ -6,6 +6,8 @@ vim.opt.mouse = 'a'
 
 vim.opt.showmode = false
 
+-- vim.opt.numberwidth = 4
+
 vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
 end)
@@ -13,7 +15,7 @@ end)
 vim.opt.breakindent = true
 
 vim.opt.undofile = true
-vim.opt.winblend = 10
+-- vim.opt.winblend = 10
 
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
@@ -30,4 +32,6 @@ vim.opt.splitbelow = true
 vim.opt.cursorline = true
 
 vim.opt.scrolloff = 10
-vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#1e222a' })
+-- vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#1e222a' })
+--
+vim.cmd 'colorscheme carbonite'
