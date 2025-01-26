@@ -9,6 +9,9 @@ window-decoration = false
 adw-toolbar-style = flat
 window-theme = ghostty
 
+window-padding-y = 16
+window-padding-x = 16
+
 keybind = alt+one=unbind
 keybind = alt+two=unbind
 keybind = alt+three=unbind

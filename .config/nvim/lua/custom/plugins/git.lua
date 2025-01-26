@@ -1,7 +1,7 @@
 return {
   {
     'tpope/vim-fugitive',
-    enabled = false,
+    enabled = true,
     config = function()
       vim.keymap.set('n', '<leader>gs', vim.cmd.G, {
         desc = '[G]it [S]tatus',
@@ -35,7 +35,7 @@ return {
 
   {
     'NeogitOrg/neogit',
-
+    enabled = false,
     dependencies = {
       'nvim-lua/plenary.nvim', -- required
       'sindrets/diffview.nvim', -- optional - Diff integration

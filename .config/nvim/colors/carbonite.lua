@@ -15,10 +15,10 @@ local carbon_dark = {
   base05 = '#f4f4f4', -- don't really know
   white = '#ffffff', -- delimeter
   blue = '#33b1ff', -- methods, macros and some other stuff
-  highlight_blue = '#304f8d',
+  purple = '#be95ff',
   -- dark_blue = '#78a9ff',
-  purple = '#be95ff', -- function declarations and some keywords
-  pinkish = '#be95ff', -- keywords I guess
+  highlight_blue = '#304f8d', -- function declarations and some keywords
+  pinkish = '#ff7eb6', -- keywords I guess
   red = '#ff8389', -- errors
   green = '#42be65',
   orange = '#ff832b',
@@ -27,21 +27,23 @@ local carbon_dark = {
 }
 
 local carbon_light = {
-  base01 = '',
-  base02 = '',
-  base03 = '',
-  base04 = '',
-  base05 = '',
-  base06 = '',
-  base07 = '',
-  base08 = '',
-  base09 = '',
-  purple = '',
-  base11 = '',
-  base12 = '',
-  base13 = '',
-  base14 = '',
-  base15 = '',
+  layer1 = '#ffffff', -- layer 1
+  layer2 = '#f4f4f4', -- layer 2
+  text = '#161616', -- text primary
+  text_secondary = '#525252', -- text secondary
+  text_tertiary = '#a8a8a8',
+  brightish_whitish = '#161616', -- cursor
+  base05 = '#161616', -- don't really know
+  white = '#161616', -- delimeter
+  blue = '#0f62fe', -- methods, macros and some other stuff
+  highlight_blue = '#e6e8f5',
+  -- dark_blue = '78a9ff',
+  purple = '#8a3ffc', -- function declarations and some keywords
+  pinkish = '#ee5396', -- keywords I guess
+  red = '#da1e28', -- errors
+  green = '#24a148',
+  orange = '#ff832b',
+  cyan = '#33b1ff',
   none = 'NONE',
 }
 
@@ -206,10 +208,10 @@ vim.api.nvim_set_hl(0, 'Define', { fg = carbon.pinkish, bg = carbon.none })
 vim.api.nvim_set_hl(0, 'Delimeter', { fg = carbon.white, bg = carbon.none })
 vim.api.nvim_set_hl(0, 'Exception', { fg = carbon.pinkish, bg = carbon.none })
 vim.api.nvim_set_hl(0, 'Float', { link = 'Number' })
-vim.api.nvim_set_hl(0, 'Function', { fg = carbon.purple, bg = carbon.none })
+vim.api.nvim_set_hl(0, 'Function', { fg = carbon.blue, bg = carbon.none })
 vim.api.nvim_set_hl(0, 'Identifier', { fg = carbon.brightish_whitish, bg = carbon.none })
 vim.api.nvim_set_hl(0, 'Include', { fg = carbon.pinkish, bg = carbon.none })
-vim.api.nvim_set_hl(0, 'Keyword', { fg = carbon.pinkish, bg = carbon.none })
+vim.api.nvim_set_hl(0, 'Keyword', { fg = carbon.purple, bg = carbon.none })
 vim.api.nvim_set_hl(0, 'Label', { fg = carbon.pinkish, bg = carbon.none })
 vim.api.nvim_set_hl(0, 'Number', { fg = carbon.cyan, bg = carbon.none })
 vim.api.nvim_set_hl(0, 'Operator', { fg = carbon.pinkish, bg = carbon.none })
@@ -272,7 +274,7 @@ vim.api.nvim_set_hl(0, '@function.macro', { fg = carbon.blue, bg = carbon.none }
 vim.api.nvim_set_hl(0, '@method', { fg = carbon.blue, bg = carbon.none })
 vim.api.nvim_set_hl(0, '@constructor', { fg = carbon.pinkish, bg = carbon.none })
 vim.api.nvim_set_hl(0, '@parameter', { fg = carbon.brightish_whitish, bg = carbon.none })
-vim.api.nvim_set_hl(0, '@keyword', { fg = carbon.pinkish, bg = carbon.none })
+vim.api.nvim_set_hl(0, '@keyword', { fg = carbon.purple, bg = carbon.none })
 vim.api.nvim_set_hl(0, '@keyword.function', { fg = carbon.purple, bg = carbon.none })
 vim.api.nvim_set_hl(0, '@keyword.operator', { fg = carbon.purple, bg = carbon.none })
 vim.api.nvim_set_hl(0, '@conditional', { fg = carbon.pinkish, bg = carbon.none })
@@ -302,7 +304,9 @@ vim.api.nvim_set_hl(0, '@text.literal', { fg = carbon.brightish_whitish, bg = ca
 vim.api.nvim_set_hl(0, '@text.uri', { fg = carbon.orange, bg = carbon.none, underline = true })
 vim.api.nvim_set_hl(0, '@tag', { fg = carbon.pinkish, bg = carbon.none })
 vim.api.nvim_set_hl(0, '@tag.attribute', { fg = carbon.cyan, bg = carbon.none })
-vim.api.nvim_set_hl(0, '@tag.delimiter', { fg = carbon.cyan, bg = carbon.none })
+vim.api.nvim_set_hl(0, '@variable.member.vue', { fg = carbon.purple, bg = carbon.none })
+vim.api.nvim_set_hl(0, '@variable.vue', { fg = carbon.purple, bg = carbon.none })
+vim.api.nvim_set_hl(0, '@tag.delimiter', { fg = carbon.blue, bg = carbon.none })
 vim.api.nvim_set_hl(0, '@reference', { fg = carbon.brightish_whitish, bg = carbon.none })
 vim.api.nvim_set_hl(0, 'NvimInternalError', { fg = carbon.layer1, bg = carbon.purple })
 vim.api.nvim_set_hl(0, 'NormalFloat', { fg = carbon.base05, bg = carbon.layer2 })

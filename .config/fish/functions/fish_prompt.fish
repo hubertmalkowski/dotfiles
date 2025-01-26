@@ -81,7 +81,7 @@ function fish_prompt
         set repo_info "$repo_branch"
 
         if _is_repo_dirty $repo_type
-            set repo_info "$red$repo_info$red ✗ "
+            set repo_info "$cyan$repo_info$red ✗ "
         else
             set repo_info "$green$repo_info$green ✔ "
         end

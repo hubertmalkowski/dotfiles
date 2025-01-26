@@ -42,6 +42,8 @@ function set_background_based_on_os()
   vim.opt.background = background
 end
 
+set_background_based_on_os()
+
 local on_color_change = function(f)
   local init_background = vim.opt.background:get()
   f(init_background)
