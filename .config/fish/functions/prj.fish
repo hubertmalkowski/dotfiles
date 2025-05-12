@@ -13,7 +13,7 @@ function prj --description "Project jumper"
     set -l prjfolders (path resolve $MY_PROJECTS/*/*/)
     # use fzf to navigate to a project
     set -l prjlist (string replace $MY_PROJECTS/ "" $prjfolders)
-    set -l selection (printf '%s\n' $prjlist | fzf --layout=reverse-list --query="$argv" --padding="1,0" --layout="reverse" --height="20" --no-separator --tmux="center")
+    set -l selection (printf '%s\n' $prjlist | fzf --layout=reverse-list --query="$argv" --padding="1,0" --layout="reverse" --height="30" --no-separator --tmux="center")
     test $status -eq 0 || return $status
 
     cd $MY_PROJECTS/$selection
@@ -22,10 +22,11 @@ function prj --description "Project jumper"
     # -d flag only if in a tmux session
 
     if in_tmux
-        tmux switch -t $sessname || tmux new -d -s $sessname tmux_dev
-        tmux switch -t $sessname
+        if not tmux has-session -t $sessname 2>/dev/null 
+            tmux new -d -s $sessname tmux_dev
+        end
+        tmux switch -t $sessname 
     else
         tmux attach -t $sessname || tmux new -s $sessname tmux_dev
     end
-
 end

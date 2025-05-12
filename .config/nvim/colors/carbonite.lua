@@ -6,8 +6,8 @@ vim.g['colors_name'] = 'carbonite'
 vim.o['termguicolors'] = true
 
 local carbon_dark = {
-  layer1 = '#161616', -- layer 1
-  layer2 = '#262626', -- layer 2
+  layer1 = '#080808', -- layer 1
+  layer2 = '#161616', -- layer 2
   text = '#f4f4f4', -- text primary
   text_secondary = '#c6c6c6', -- text secondary
   text_tertiary = '#6f6f6f',
@@ -310,6 +310,8 @@ vim.api.nvim_set_hl(0, '@tag.delimiter', { fg = carbon.blue, bg = carbon.none })
 vim.api.nvim_set_hl(0, '@reference', { fg = carbon.brightish_whitish, bg = carbon.none })
 vim.api.nvim_set_hl(0, 'NvimInternalError', { fg = carbon.layer1, bg = carbon.purple })
 vim.api.nvim_set_hl(0, 'NormalFloat', { fg = carbon.base05, bg = carbon.layer2 })
+vim.api.nvim_set_hl(0, 'SnacksPickerTree', { fg = carbon.base05, bg = carbon.layer2 })
+
 vim.api.nvim_set_hl(0, 'FloatBorder', { fg = carbon.layer2, bg = carbon.layer2 })
 vim.api.nvim_set_hl(0, 'NormalNC', { fg = carbon.base05, bg = carbon.layer1 })
 vim.api.nvim_set_hl(0, 'TermCursor', { fg = carbon.layer1, bg = carbon.brightish_whitish })
@@ -417,4 +419,6 @@ vim.api.nvim_set_hl(0, 'VimwikiHeaderChar', { link = 'markdownH1' })
 vim.api.nvim_set_hl(0, 'VimwikiList', { link = 'markdownListMarker' })
 vim.api.nvim_set_hl(0, 'VimwikiLink', { link = 'markdownUrl' })
 vim.api.nvim_set_hl(0, 'VimwikiCode', { link = 'markdownCode' })
+
+vim.api.nvim_set_hl(0, 'WhichKeyGroup', { fg = carbon.blue, bg = carbon.none })
 return { palette = carbon }

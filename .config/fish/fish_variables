@@ -1,6 +1,6 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
-SETUVAR __fish_initialized:3400
+SETUVAR __fish_initialized:3800
 SETUVAR _fisher_halostatue_2F_fish_2D_rake_files:\x7e/\x2econfig/fish/functions/clean_rake_cache\x2efish\x1e\x7e/\x2econfig/fish/completions/rake\x2efish
 SETUVAR _fisher_jorgebucaran_2F_fisher_files:\x7e/\x2econfig/fish/functions/fisher\x2efish\x1e\x7e/\x2econfig/fish/completions/fisher\x2efish
 SETUVAR _fisher_plugins:jorgebucaran/fisher\x1ehalostatue/fish\x2drake
@@ -25,7 +25,7 @@ SETUVAR fish_color_option:\x1d
 SETUVAR fish_color_param:7aa6da
 SETUVAR fish_color_quote:b9ca4a
 SETUVAR fish_color_redirection:70c0b1
-SETUVAR fish_color_search_match:bryellow\x1e\x2d\x2dbackground\x3dbrblack
+SETUVAR fish_color_search_match:white\x1e\x2d\x2dbackground\x3dbrblack
 SETUVAR fish_color_selection:white\x1e\x2d\x2dbold\x1e\x2d\x2dbackground\x3dbrblack
 SETUVAR fish_color_status:red
 SETUVAR fish_color_user:brgreen
@@ -45,4 +45,4 @@ SETUVAR fish_pager_color_selected_background:\x2d\x2dbackground\x3dbrblack
 SETUVAR fish_pager_color_selected_completion:\x1d
 SETUVAR fish_pager_color_selected_description:\x1d
 SETUVAR fish_pager_color_selected_prefix:\x1d
-SETUVAR fish_user_paths:/home/hubert/\x2elocal/bin\x1e/home/hubert/bin
+SETUVAR fish_user_paths:/usr/bin/zig\x2dlinux\x2dx86_64\x2d0\x2e15\x2e0\x2ddev\x2e62\x2bea57fb55e\x1e/home/hubert/\x2eopam/default/bin\x1e/home/hubert/\x2elocal/share/nvim/mason/bin\x1e/home/hubert/\x2elocal/bin\x1e/home/hubert/bin

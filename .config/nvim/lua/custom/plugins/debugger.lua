@@ -2,13 +2,117 @@ return {
   'rcarriga/nvim-dap-ui',
   dependencies = { 'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio' },
   keys = {
-    { '<leader>tb', '<cmd>DapToggleBreakpoint<cr>', desc = '[T]oggle [B]reakpoint' },
     {
-      '<leader>td',
+      '<leader>dd',
       function()
         require('dapui').toggle {}
       end,
-      desc = '[T]oggle [D]ebugger',
+      desc = 'Debugger',
+    },
+    {
+      '<leader>db',
+      function()
+        require('dap').toggle_breakpoint()
+      end,
+      desc = 'Toggle Breakpoint',
+    },
+    {
+      '<leader>dc',
+      function()
+        require('dap').continue()
+      end,
+      desc = 'Run/Continue',
+    },
+    {
+      '<leader>da',
+      function()
+        require('dap').continue { before = get_args }
+      end,
+      desc = 'Run with Args',
+    },
+    {
+      '<leader>dC',
+      function()
+        require('dap').run_to_cursor()
+      end,
+      desc = 'Run to Cursor',
+    },
+    {
+      '<leader>dg',
+      function()
+        require('dap').goto_()
+      end,
+      desc = 'Go to Line (No Execute)',
+    },
+    {
+      '<leader>di',
+      function()
+        require('dap').step_into()
+      end,
+      desc = 'Step Into',
+    },
+    {
+      '<leader>dj',
+      function()
+        require('dap').down()
+      end,
+      desc = 'Down',
+    },
+    {
+      '<leader>dk',
+      function()
+        require('dap').up()
+      end,
+      desc = 'Up',
+    },
+    {
+      '<leader>dl',
+      function()
+        require('dap').run_last()
+      end,
+      desc = 'Run Last',
+    },
+    {
+      '<leader>do',
+      function()
+        require('dap').step_out()
+      end,
+      desc = 'Step Out',
+    },
+    {
+      '<leader>dO',
+      function()
+        require('dap').step_over()
+      end,
+      desc = 'Step Over',
+    },
+    {
+      '<leader>dP',
+      function()
+        require('dap').pause()
+      end,
+      desc = 'Pause',
+    },
+    {
+      '<leader>dr',
+      function()
+        require('dap').repl.toggle()
+      end,
+      desc = 'Toggle REPL',
+    },
+    {
+      '<leader>ds',
+      function()
+        require('dap').session()
+      end,
+      desc = 'Session',
+    },
+    {
+      '<leader>dt',
+      function()
+        require('dap').terminate()
+      end,
+      desc = 'Terminate',
     },
   },
   opts = {
@@ -21,7 +125,7 @@ return {
       icons = {
         play = '',
         step_into = '',
-        step_over = '',
+        step_over = '',
         step_out = '',
         step_back = '',
         run_last = '',
@@ -37,10 +141,10 @@ return {
       dapui.open {}
     end
     dap.listeners.before.event_terminated['dapui_config'] = function()
-      dapui.close {}
+      -- dapui.close {}
     end
     dap.listeners.before.event_exited['dapui_config'] = function()
-      dapui.close {}
+      -- dapui.close {}
     end
 
     vim.cmd 'hi DapBreakpointColor guifg=#fa4848'
@@ -66,24 +170,80 @@ return {
       command = '/home/hubert/.local/share/nvim/mason/packages/elixir-ls/debug_adapter.sh', -- debug_adapter.bat for windows
       args = {},
     }
-
-    dap.adapters.gdb = {
-      type = 'executable',
-      command = 'gdb',
-      args = { '--interpreter=dap', '--eval-command', 'set print pretty on' },
+    --
+    -- dap.adapters.gdb = {
+    --   type = 'executable',
+    --   command = 'gdb',
+    --   args = { '--interpreter=dap', '--eval-command', 'set print pretty on' },
+    -- }
+    --
+    --
+    -- dap.adapters.codelldb = {
+    --   type = 'server',
+    --   host = 'localhost',
+    --   port = '${port}',
+    --   executable = {
+    --     command = 'codelldb',
+    --     args = {
+    --       '--port',
+    --       '${port}',
+    --     },
+    --   },
+    -- }
+    dap.adapters.codelldb = {
+      type = 'server',
+      host = '127.0.0.1',
+      port = 13000,
     }
 
     dap.configurations.c = {
       {
-        name = 'Launch',
-        type = 'gdb',
+        name = 'Launch file',
+        type = 'codelldb',
         request = 'launch',
         program = function()
           return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
         end,
         cwd = '${workspaceFolder}',
-        stopAtBeginningOfMainSubprogram = false,
+        stopOnEntry = false,
       },
     }
+
+    dap.configurations.zig = {
+      {
+        name = 'Launch file',
+        type = 'codelldb',
+        request = 'launch',
+        program = function()
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+      },
+    }
+    --   {
+    --     name = 'Launch',
+    --     type = 'gdb',
+    --     request = 'launch',
+    --     program = function()
+    --       return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    --     end,
+    --     cwd = '${workspaceFolder}',
+    --     stopAtBeginningOfMainSubprogram = false,
+    --   },
+    --   {
+    --     name = 'Select and attach to process',
+    --     type = 'gdb',
+    --     request = 'attach',
+    --     program = function()
+    --       return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    --     end,
+    --     pid = function()
+    --       local name = vim.fn.input 'Executable name (filter): '
+    --       return require('dap.utils').pick_process { filter = name }
+    --     end,
+    --     cwd = '${workspaceFolder}',
+    --   },
+    -- }
   end,
 }

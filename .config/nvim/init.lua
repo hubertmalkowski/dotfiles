@@ -4,6 +4,7 @@ vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = false
 
 require 'custom.neovide'
+require 'custom.fancy-visual'
 require 'options'
 require 'keymaps'
 

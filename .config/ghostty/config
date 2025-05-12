@@ -1,11 +1,14 @@
-theme = light:oxocarbon-light, dark:Oxocarbon
-font-family = Iosevka SS14
+theme = light:oxocarbon-light, dark:carbonite
+font-family = Iosevka SS03
+# custom-shader = ./shaders/balatro.glsl
+# custom-shader = ./shaders/bloom.glsl
+# font-family = Adwaita Mono
 
 font-size = 13
 adjust-cell-height = 21%
 adjust-cursor-height = 21%
 
-window-decoration = false
+# window-decoration = false
 adw-toolbar-style = flat
 window-theme = ghostty
 
@@ -21,3 +24,5 @@ keybind = alt+six=unbind
 keybind = alt+seven=unbind
 keybind = alt+eight=unbind
 keybind = alt+nine=unbind
+
+keybind = alt+w=toggle_window_decorations
