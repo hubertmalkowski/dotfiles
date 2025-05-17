@@ -82,16 +82,17 @@ return {
                 local target_branch = vim.fn.input('Target branch for merge base diff (default: master): ', 'master')
 
                 return string.format(
-                  [[You are a senior software engineer performing a code review. Analyze the following code changes.\n\n]
-                   Identify any potential bugs, performance issues, security vulnerabilities, or areas that could be refactored for better readability or maintainability.\n
-                   Explain your reasoning clearly and provide specific suggestions for improvement.\n
-                   Consider edge cases, error handling, and adherence to best practices and coding standards.\n\n
-                   Here are the code changes:\n\n
+                  [[
+                  You are a senior software engineer performing a code review. Analyze the following code changes.
+                   Identify any potential bugs, performance issues, security vulnerabilities, or areas that could be refactored for better readability or maintainability.
+                   Explain your reasoning clearly and provide specific suggestions for improvement.
+                   Consider edge cases, error handling, and adherence to best practices and coding standards.
+                   Here are the code changes:
                    ```
                     %s
                    ```
                    ]],
-                  vim.fn.system('git diff --merge-base ' .. target_branch)
+                  vim.fn.system('git diff --merge-base ' .. target_branch .. " -- . ':!**/pnpm-lock.yaml'")
                 )
               end,
             },

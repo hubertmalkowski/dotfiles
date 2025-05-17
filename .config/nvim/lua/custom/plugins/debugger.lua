@@ -150,6 +150,27 @@ return {
     vim.cmd 'hi DapBreakpointColor guifg=#fa4848'
     vim.fn.sign_define('DapBreakpoint', { text = '󰮕 ', texthl = 'DapBreakpointColor', linehl = '', numhl = '' })
 
+    dap.adapters.ocamlearlybird = {
+      type = 'executable',
+      command = 'ocamlearlybird',
+      args = { 'debug' },
+    }
+
+    dap.configurations.ocaml = {
+      {
+        name = 'OCaml Debug test.bc',
+        type = 'ocamlearlybird',
+        request = 'launch',
+        program = '${workspaceFolder}/_build/default/test/test.bc',
+      },
+      {
+        name = 'OCaml Debug main.bc',
+        type = 'ocamlearlybird',
+        request = 'launch',
+        program = '${workspaceFolder}/_build/default/bin/main.bc',
+      },
+    }
+
     dap.configurations.elixir = {
       {
         type = 'mix_task',
