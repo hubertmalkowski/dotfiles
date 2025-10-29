@@ -35,6 +35,7 @@ vim.opt.scrolloff = 10
 -- vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#1e222a' })
 --
 vim.cmd 'colorscheme carbonite'
+-- vim.opt.numberwidth = 10
 
 -- Nice and simple folding:
 vim.o.foldenable = true
@@ -54,3 +55,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
   end,
 })
+
+vim.api.nvim_create_user_command(
+  'Cb', -- The name of your command (must start with an uppercase letter)
+  '<cmd>:%bd|e#<cr>', -- A string to execute (like Vimscript) OR a Lua function
+  {
+    desc = 'Clear all buffers but current',
+  }
+)

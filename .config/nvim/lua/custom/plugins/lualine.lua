@@ -80,6 +80,8 @@ return {
   'nvim-lualine/lualine.nvim',
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
+    -- local scrollbar = require 'custom.components.lualine_scrollbar'
+    local lualine_progress = require 'custom.components.lualine_progress'
     require('lualine').setup {
       options = {
         section_separators = '',
@@ -107,7 +109,18 @@ return {
           -- require('doing').status,
           'branch',
         },
-        lualine_y = { 'filetype', 'progress' },
+        lualine_y = {
+          'filetype',
+          {
+            lualine_progress.script_scrollbar,
+            color = 'LualineScriptScrollbar', -- Apply the custom highlight group
+            -- You can override component options here if needed:
+            options = {
+              --   sbar_chars = { "█", "▇", "▆", "▅", "▄", "▃", "▂", " " }, -- Alternative chars
+              -- repeat_char = 1,
+            },
+          },
+        },
         lualine_z = {
           -- 'location',
         },

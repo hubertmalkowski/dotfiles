@@ -1,5 +1,4 @@
 return {
-  { 'boltlessengineer/zeta.nvim' },
   {
     'zbirenbaum/copilot.lua',
     event = 'BufEnter',
@@ -49,18 +48,41 @@ return {
         },
       },
       adapters = {
-        gemini = function()
-          return require('codecompanion.adapters').extend('gemini', {
-            schema = {
-              model = {
-                default = 'gemini-2.5-flash-preview-04-17',
+        http = {
+          gemini = function()
+            return require('codecompanion.adapters').extend('gemini', {
+              schema = {
+                model = {
+                  default = 'gemini-2.5-flash-preview-05-20',
+                },
               },
-            },
-            env = {
-              api_key = 'cmd:rbw get gemini',
-            },
-          })
-        end,
+              env = {
+                api_key = 'cmd:rbw get gemini',
+              },
+            })
+          end,
+          gemini_pro = function()
+            return require('codecompanion.adapters').extend('gemini', {
+              schema = {
+                model = {
+                  default = 'gemini-2.5-pro-preview-05-06',
+                },
+              },
+              env = {
+                api_key = 'cmd:rbw get gemini',
+              },
+            })
+          end,
+        },
+        acp = {
+          claude_code = function()
+            return require('codecompanion.adapters').extend('claude_code', {
+              env = {
+                CLAUDE_CODE_OAUTH_TOKEN = 'cmd:rbw get AnthropicKey',
+              },
+            })
+          end,
+        },
       },
       display = {
         diff = {
@@ -131,5 +153,8 @@ return {
         mode = 'v',
       },
     },
+    init = function()
+      require('custom.components.codecompanion_spinner'):init()
+    end,
   },
 }

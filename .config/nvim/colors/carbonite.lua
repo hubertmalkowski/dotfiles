@@ -419,6 +419,10 @@ vim.api.nvim_set_hl(0, 'VimwikiHeaderChar', { link = 'markdownH1' })
 vim.api.nvim_set_hl(0, 'VimwikiList', { link = 'markdownListMarker' })
 vim.api.nvim_set_hl(0, 'VimwikiLink', { link = 'markdownUrl' })
 vim.api.nvim_set_hl(0, 'VimwikiCode', { link = 'markdownCode' })
+vim.api.nvim_set_hl(0, 'LspInlayHint', { link = 'Comment' })
+
+vim.api.nvim_set_hl(0, 'MatchParen', { italic = true })
+vim.api.nvim_set_hl(0, 'LualineScriptScrollbar', { fg = carbon.purple, bg = carbon.none })
 
 vim.api.nvim_set_hl(0, 'WhichKeyGroup', { fg = carbon.blue, bg = carbon.none })
 return { palette = carbon }

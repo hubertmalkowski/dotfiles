@@ -47,6 +47,7 @@ return {
   {
     'ThePrimeagen/harpoon',
     branch = 'harpoon2',
+    enabled = false,
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
       local harpoon = require 'harpoon'
@@ -138,5 +139,27 @@ return {
         toggle_picker(harpoon:list())
       end, { desc = '[H]arpoon [S]earch' })
     end,
+  },
+  {
+    'leath-dub/snipe.nvim',
+    keys = {
+      {
+        'gb',
+        function()
+          require('snipe').open_buffer_menu()
+        end,
+        desc = 'Open Snipe buffer menu',
+      },
+    },
+    opts = {
+      ui = {
+        preselect_current = true,
+      },
+      hints = {
+        -- Charaters to use for hints (NOTE: make sure they don't collide with the navigation keymaps)
+        ---@type string
+        dictionary = 'qwertyuiop',
+      },
+    },
   },
 }

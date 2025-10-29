@@ -19,6 +19,9 @@ set --export PATH $BUN_INSTALL/bin $PATH
 # Added by Radicle.
 export PATH="$PATH:/home/hubert/.radicle/bin"
 
+export GOBIN="/home/hubert/gobin"
+export PATH="$PATH:$GOPATH"
+
 set -gx WASMTIME_HOME "$HOME/.wasmtime"
 
 string match -r ".wasmtime" "$PATH" > /dev/null; or set -gx PATH "$WASMTIME_HOME/bin" $PATH
@@ -28,3 +31,11 @@ export WASMER_DIR="/home/hubert/.wasmer"
 [ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
 
 set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME ; set -gx PATH $HOME/.cabal/bin /home/hubert/.ghcup/bin $PATH # ghcup-env
+
+# opencode
+fish_add_path /home/hubert/.opencode/bin
+
+# ZVM
+set -gx ZVM_INSTALL "$HOME/.zvm/self"
+set -gx PATH $PATH "$HOME/.zvm/bin"
+set -gx PATH $PATH "$ZVM_INSTALL/"

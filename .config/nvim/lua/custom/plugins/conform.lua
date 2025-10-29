@@ -18,7 +18,7 @@ return { -- Autoformat
       -- Disable "format_on_save lsp_fallback" for languages that don't
       -- have a well standardized coding style. You can add additional
       -- languages here or re-enable it for the disabled ones.
-      local disable_filetypes = { c = true, cpp = true }
+      local disable_filetypes = { c = true, cpp = true, javascript = true, typescript = true, vue = true }
       return {
         timeout_ms = 500,
         lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
@@ -31,16 +31,17 @@ return { -- Autoformat
       --
       -- You can use 'stop_after_first' to run the first available formatter from the list
       -- javascript = { "prettierd", "prettier", stop_after_first = true },
-      javascript = { 'prettierd', 'prettier', stop_after_first = true },
-      typescript = { 'prettierd', 'prettier', stop_after_first = true },
-      typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
-      javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
-      vue = { 'prettierd', 'prettier', stop_after_first = true },
-      astro = { 'prettierd', 'prettier', stop_after_first = true },
-      html = { 'prettierd', 'prettier', stop_after_first = true },
-      htmlangular = { 'prettierd', 'prettier', stop_after_first = true },
-      json = { 'prettierd', 'prettier', stop_after_first = true },
-      css = { 'prettierd', 'prettier', stop_after_first = true },
+      javascript = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+      typescript = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+      typescriptreact = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+      javascriptreact = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+      vue = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+      astro = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+      html = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+      htmlangular = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+      json = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+      jsonc = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+      css = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
       eruby = { 'erb_format' },
       erlang = { 'erlfmt' },
     },
