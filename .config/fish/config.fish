@@ -39,3 +39,28 @@ fish_add_path /home/hubert/.opencode/bin
 set -gx ZVM_INSTALL "$HOME/.zvm/self"
 set -gx PATH $PATH "$HOME/.zvm/bin"
 set -gx PATH $PATH "$ZVM_INSTALL/"
+
+# ASDF configuration code
+if test -z $ASDF_DATA_DIR
+    set _asdf_shims "$HOME/.asdf/shims"
+else
+    set _asdf_shims "$ASDF_DATA_DIR/shims"
+end
+
+# Do not use fish_add_path (added in Fish 3.2) because it
+# potentially changes the order of items in PATH
+if not contains $_asdf_shims $PATH
+    set -gx --prepend PATH $_asdf_shims
+end
+set --erase _asdf_shims
+
+set -gx PYENV_ROOT $HOME/.pyenv
+if test -d $PYENV_ROOT/bin
+    fish_add_path $PYENV_ROOT/bin
+end
+status is-interactive; and pyenv init - fish | source
+status is-interactive; and pyenv virtualenv-init - | source
+
+set -gx ZK_NOTEBOOK_DIR "$HOME/Okieneczko"
+
+eval (opam env)

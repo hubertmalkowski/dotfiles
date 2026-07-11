@@ -1,5 +1,5 @@
 function fish_greeting
  echo 
- echo welcome to (set_color blue)$hostname(set_color normal) young (set_color green)artisian(set_color normal)
+ echo essa (set_color blue)essa (set_color magenta)essa (set_color green)essa (set_color cyan)essa (set_color red)essa (set_color yellow)essa (set_color normal)
  echo 
 end

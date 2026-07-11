@@ -7,6 +7,7 @@ return {
     'nvim-treesitter/nvim-treesitter',
     'marilari88/neotest-vitest',
     'jfpedroza/neotest-elixir',
+    'lawrence-laz/neotest-zig', -- Installation
   },
   config = function()
     local neotest = require 'neotest'
@@ -14,6 +15,11 @@ return {
       adapters = {
         require 'neotest-vitest',
         require 'neotest-elixir',
+        require 'neotest-zig' {
+          dap = {
+            adapter = 'lldb',
+          },
+        },
       },
     }
 

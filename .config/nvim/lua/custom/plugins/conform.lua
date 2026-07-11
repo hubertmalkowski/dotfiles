@@ -44,6 +44,9 @@ return { -- Autoformat
       css = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
       eruby = { 'erb_format' },
       erlang = { 'erlfmt' },
+      ocaml = { 'ocamlformat' },
+      cpp = { 'clang-format' },
+      haskell = { 'fourmolu' },
     },
   },
 }

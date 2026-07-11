@@ -407,6 +407,30 @@ return {
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
+
+        -- ocamllsp = {},
+
+        tailwindcss = {
+          filetypes = { 'html', 'elixir', 'eelixir', 'heex', 'vue', 'ts', 'tsx', 'js', 'jsx', 'css', 'astro', 'eruby', 'svelte' },
+          init_options = {
+            userLanguages = {
+              elixir = 'html-eex',
+              eelixir = 'html-eex',
+              heex = 'html-eex',
+            },
+          },
+          settings = {
+            tailwindCSS = {
+              classAttributes = { 'class', 'className', 'class:list', 'classList', 'ngClass' },
+              experimental = {
+                classRegex = {
+                  'class[:]\\s*"([^"]*)"',
+                  { '~H"([^"]*)"', 1 },
+                },
+              },
+            },
+          },
+        },
         -- clangd = {},
         -- gopls = {},
         -- pyright = {},
@@ -444,12 +468,12 @@ return {
       -- -- Enable both
       -- vim.lsp.enable 'vue_ls'
 
-      require('lspconfig')['vue_ls'].setup {
-
-        cmd = { 'vue-language-server', '--stdio' },
-        filetypes = { 'vue' },
-        root_markers = { 'package.json' },
-      }
+      -- require('lspconfig')['vue_ls'].setup {
+      --
+      --   cmd = { 'vue-language-server', '--stdio' },
+      --   filetypes = { 'vue' },
+      --   root_markers = { 'package.json' },
+      -- }
 
       -- Ensure the servers and tools above are installed
       --
@@ -469,6 +493,39 @@ return {
         'stylua', -- Used to format Lua code
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = 'roc',
+        callback = function(args)
+          local root = vim.fs.root(args.buf, { 'main.roc', 'app.roc' })
+
+          -- Retrieve capabilities from blink.cmp
+          -- local capabilities = require('blink.cmp').get_lsp_capabilities()
+
+          vim.lsp.start {
+            name = 'roc_lsp',
+            cmd = { '/usr/bin/roc', 'experimental-lsp', '--debug-transport' },
+            root_dir = root,
+            capabilities = capabilities,
+          }
+        end,
+      })
+
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = { 'ocaml', 'dune' },
+        callback = function(args)
+          local root = vim.fs.root(args.buf, { 'dune' })
+
+          -- Retrieve capabilities from blink.cmp
+          -- local capabilities = require('blink.cmp').get_lsp_capabilities()
+
+          vim.lsp.start {
+            name = 'ocamllsp',
+            cmd = { 'ocamllsp' },
+            root_dir = root,
+            capabilities = capabilities,
+          }
+        end,
+      })
 
       require('mason-lspconfig').setup {
         ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
@@ -541,5 +598,11 @@ return {
         },
       },
     },
+  },
+  {
+    'tarides/ocaml.nvim',
+    config = function()
+      require('ocaml').setup()
+    end,
   },
 }

@@ -6,7 +6,7 @@ vim.g['colors_name'] = 'carbonite'
 vim.o['termguicolors'] = true
 
 local carbon_dark = {
-  layer1 = '#080808', -- layer 1
+  layer1 = '#0D0D0D', -- layer 1
   layer2 = '#161616', -- layer 2
   text = '#f4f4f4', -- text primary
   text_secondary = '#c6c6c6', -- text secondary

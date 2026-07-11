@@ -236,10 +236,14 @@ return {
         type = 'codelldb',
         request = 'launch',
         program = function()
-          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/zig-out/bin', 'file')
         end,
         cwd = '${workspaceFolder}',
         stopOnEntry = false,
+        -- args = function()
+        --   local args_string = vim.fn.input 'Arguments: '
+        --   return vim.split(args_string, ' +')
+        -- end,
       },
     }
     --   {

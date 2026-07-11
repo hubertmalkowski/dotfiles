@@ -21,6 +21,7 @@ return { -- Useful plugin to show you pending keybinds.
       { '<leader>d', group = '(D)ebugger', icon = '' },
       { '<leader>s', group = '(S)earch' },
       { '<leader>w', group = '(W)orkspace' },
+      { '<leader>z', group = '(Z)k' },
       { '<leader>t', group = '(T)oggle' },
       { '<leader>l', group = '(L)ang specific' },
       { '<leader>g', group = '(G)it' },

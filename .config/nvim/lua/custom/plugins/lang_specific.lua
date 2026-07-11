@@ -38,7 +38,11 @@ return {
     ft = { 'markdown', 'codecompanion' },
     ---@module 'render-marthink we need the Ringkdown'
     ---@type render.md.UserConfig
-    opts = {},
+    opts = {
+      code = {
+        language = false,
+      },
+    },
   },
 
   -- Angular
@@ -59,6 +63,43 @@ return {
           require('ng').goto_component_with_template_file {}
         end,
         desc = '(A)ngular (C)omponent',
+      },
+    },
+  },
+  -- Coq/Roq
+  {
+    'whonore/Coqtail',
+    init = function()
+      vim.g.loaded_coqtail = 1
+      vim.g['coqtail#supported'] = 0
+    end,
+  },
+  {
+    'tomtomjhj/vsrocq.nvim',
+    ft = { 'coq' },
+    dependecies = {
+      'whonore/Coqtail',
+    },
+    opts = {
+      -- vsrocq = { ... }
+      -- lsp = { ... }
+    },
+    keys = {
+      {
+        '<leader>rf',
+        '<cmd>VsRocq stepForward<CR>',
+        desc = '(r)ocq  step(F)orward',
+      },
+      {
+        '<leader>rb',
+        '<cmd>VsRocq stepBackward<CR>',
+        desc = '(r)ocq  step(B)ackward',
+      },
+
+      {
+        '<leader>rp',
+        '<cmd>VsRocq interpretToPoint<CR>',
+        desc = '(r)ocq  interpreTo(p)oint',
       },
     },
   },
