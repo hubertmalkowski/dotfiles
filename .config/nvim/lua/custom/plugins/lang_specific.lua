@@ -70,8 +70,11 @@ return {
   {
     'whonore/Coqtail',
     init = function()
+      -- only want Coqtail's ftdetect/syntax; vsrocq.nvim drives the proofs.
+      -- skipping plugin/coqtail.vim means we must define coqtail_supported
+      -- ourselves, else ftplugin/coq.vim errors out and kills the FileType chain
       vim.g.loaded_coqtail = 1
-      vim.g['coqtail#supported'] = 0
+      vim.g.coqtail_supported = 0
     end,
   },
   {
@@ -102,5 +105,12 @@ return {
         desc = '(r)ocq  interpreTo(p)oint',
       },
     },
+  },
+
+  {
+    'koka-lang/koka',
+    config = function(plugin)
+      vim.opt.rtp:append(plugin.dir .. 'support/vim')
+    end,
   },
 }

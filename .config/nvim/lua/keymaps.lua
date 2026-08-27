@@ -17,3 +17,20 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
+
+local function symbol(trigger, char)
+  vim.cmd('iabbrev ' .. trigger .. ' ' .. char)
+end
+
+symbol('vdash!', '⊢')
+symbol('dashv!', '⊣')
+symbol('forall!', '∀')
+symbol('exists!', '∃')
+symbol('models!', '⊨')
+symbol('to!', '→')
+symbol('rightarrow!', '⇒')
+symbol('lambda!', 'λ')
+symbol('neg!', '¬')
+symbol('land!', '∧')
+symbol('lor!', '∨')
+symbol('gamma!', 'Γ')

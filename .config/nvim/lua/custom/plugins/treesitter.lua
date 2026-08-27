@@ -5,19 +5,56 @@ return {
 
     branch = 'main', -- or "master", or any branch name
 
-    opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'query', 'vim', 'vimdoc' },
-      auto_install = true,
-    },
-    config = function(_, opts)
-      require('nvim-treesitter').setup(opts)
+    config = function()
+      local ts = require 'nvim-treesitter'
+      ts.setup {}
 
-      -- new main branch dropped highlight/indent modules; enable via built-in
+      -- Rocq (formerly Coq): not in the nvim-treesitter registry, add it by hand
+      local function register_rocq()
+        require('nvim-treesitter.parsers').rocq = {
+          install_info = {
+            url = 'https://github.com/aruzdh/tree-sitter-rocq',
+            revision = '300fe33fc299c30f736fd56d8ef8a28b08acd4e6',
+            queries = 'queries',
+          },
+          tier = 0,
+        }
+      end
+      vim.api.nvim_create_autocmd('User', { pattern = 'TSUpdate', callback = register_rocq })
+      pcall(register_rocq)
+
+      -- `.v` files are filetype `coq` (Coqtail/vsrocq expect that), parser is `rocq`
+      vim.treesitter.language.register('rocq', 'coq')
+
+      -- main branch dropped ensure_installed/auto_install, do it by hand
+      local ensure_installed =
+        { 'bash', 'c', 'diff', 'haskell', 'html', 'lua', 'luadoc', 'query', 'rocq', 'vim', 'vimdoc' }
+      local installed = ts.get_installed 'parsers'
+      local missing = vim.tbl_filter(function(lang)
+        return not vim.list_contains(installed, lang)
+      end, ensure_installed)
+      if #missing > 0 then
+        ts.install(missing)
+      end
+
+      -- main branch also dropped highlight/indent modules; enable via built-in
       local disabled_ft = { markdown = true }
       vim.api.nvim_create_autocmd('FileType', {
         callback = function(ev)
-          if not disabled_ft[vim.bo[ev.buf].filetype] then
+          local ft = vim.bo[ev.buf].filetype
+          if disabled_ft[ft] then
+            return
+          end
+          local lang = vim.treesitter.language.get_lang(ft)
+          if not lang then
+            return
+          end
+          if vim.list_contains(ts.get_installed 'parsers', lang) then
             pcall(vim.treesitter.start, ev.buf)
+          elseif vim.list_contains(ts.get_available(), lang) then
+            ts.install(lang):await(function()
+              pcall(vim.treesitter.start, ev.buf)
+            end)
           end
         end,
       })
@@ -33,6 +70,9 @@ return {
 
   {
     'romus204/tree-sitter-manager.nvim',
+    -- conflicts with nvim-treesitter main: same install dir, overrides
+    -- :TSInstall/:TSUpdate, and can't install parsers from a local path
+    enabled = false,
     config = function()
       require('tree-sitter-manager').setup {
         ensure_installed = {

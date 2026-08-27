@@ -527,6 +527,25 @@ return {
         end,
       })
 
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = { 'haskell', 'lhaskell' },
+        callback = function(args)
+          local root = vim.fs.root(args.buf, { 'hie.yaml', 'stack.yaml', 'cabal.project', '*.cabal', 'package.yaml' })
+
+          vim.lsp.start {
+            name = 'hls',
+            cmd = { 'haskell-language-server-wrapper', '--lsp' },
+            root_dir = root,
+            capabilities = capabilities,
+            settings = {
+              haskell = {
+                formattingProvider = 'fourmolu',
+              },
+            },
+          }
+        end,
+      })
+
       require('mason-lspconfig').setup {
         ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
         automatic_installation = false,
