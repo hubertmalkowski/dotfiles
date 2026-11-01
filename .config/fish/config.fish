@@ -64,3 +64,10 @@ status is-interactive; and pyenv virtualenv-init - | source
 set -gx ZK_NOTEBOOK_DIR "$HOME/Okieneczko"
 
 eval (opam env)
+
+
+direnv hook fish | source
+
+# >>> coursier install directory >>>
+set -gx PATH "$PATH:/home/hubert/.local/share/coursier/bin"
+# <<< coursier install directory <<<

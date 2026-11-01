@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Eclipse formatter profile used by jdtls, tuned to pass checkstyle (Google-ish, 4 spaces, 120 cols).
+     Unlisted settings fall back to Eclipse defaults. -->
+<profiles version="23">
+  <profile kind="CodeFormatterProfile" name="Checkstyle" version="23">
+    <setting id="org.eclipse.jdt.core.formatter.tabulation.char" value="space"/>
+    <setting id="org.eclipse.jdt.core.formatter.tabulation.size" value="4"/>
+    <setting id="org.eclipse.jdt.core.formatter.indentation.size" value="4"/>
+    <setting id="org.eclipse.jdt.core.formatter.continuation_indentation" value="2"/>
+    <setting id="org.eclipse.jdt.core.formatter.continuation_indentation_for_array_initializer" value="2"/>
+    <setting id="org.eclipse.jdt.core.formatter.indent_switchstatements_compare_to_switch" value="true"/>
+    <setting id="org.eclipse.jdt.core.formatter.lineSplit" value="120"/>
+    <setting id="org.eclipse.jdt.core.formatter.comment.line_length" value="120"/>
+    <setting id="org.eclipse.jdt.core.formatter.join_wrapped_lines" value="false"/>
+    <!-- OperatorWrap option=NL -->
+    <setting id="org.eclipse.jdt.core.formatter.wrap_before_binary_operator" value="true"/>
+    <setting id="org.eclipse.jdt.core.formatter.wrap_before_logical_operator" value="true"/>
+    <setting id="org.eclipse.jdt.core.formatter.wrap_before_multiplicative_operator" value="true"/>
+    <setting id="org.eclipse.jdt.core.formatter.wrap_before_additive_operator" value="true"/>
+    <setting id="org.eclipse.jdt.core.formatter.wrap_before_string_concatenation" value="true"/>
+    <setting id="org.eclipse.jdt.core.formatter.wrap_before_bitwise_operator" value="true"/>
+    <setting id="org.eclipse.jdt.core.formatter.wrap_before_relational_operator" value="true"/>
+    <setting id="org.eclipse.jdt.core.formatter.wrap_before_shift_operator" value="true"/>
+    <setting id="org.eclipse.jdt.core.formatter.wrap_before_conditional_operator" value="true"/>
+    <setting id="org.eclipse.jdt.core.formatter.wrap_before_or_operator_multicatch" value="true"/>
+    <!-- JavadocParagraph / misc -->
+    <setting id="org.eclipse.jdt.core.formatter.comment.insert_new_line_for_parameter" value="do not insert"/>
+    <setting id="org.eclipse.jdt.core.formatter.comment.indent_parameter_description" value="false"/>
+    <setting id="org.eclipse.jdt.core.formatter.comment.indent_root_tags" value="false"/>
+    <setting id="org.eclipse.jdt.core.formatter.comment.format_html" value="false"/>
+    <setting id="org.eclipse.jdt.core.formatter.insert_new_line_at_end_of_file_if_missing" value="insert"/>
+  </profile>
+</profiles>

@@ -113,4 +113,116 @@ return {
       vim.opt.rtp:append(plugin.dir .. 'support/vim')
     end,
   },
+  {
+    'nvim-java/nvim-java',
+    config = function()
+      require('java').setup()
+
+      -- don't let vim-sleuth pick up tabs from badly formatted files
+      vim.g.sleuth_java_heuristics = 0
+
+      -- format like checkstyle wants (see java/eclipse-formatter.xml)
+      vim.lsp.config('jdtls', {
+        settings = {
+          java = {
+            format = {
+              enabled = true,
+              settings = {
+                url = vim.fn.stdpath 'config' .. '/java/eclipse-formatter.xml',
+                profile = 'Checkstyle',
+              },
+            },
+            -- CustomImportOrder: third party, then java/javax, then static
+            completion = { importOrder = { '', 'java', 'javax', '#' } },
+            -- AvoidStarImport
+            sources = { organizeImports = { starThreshold = 9999, staticStarThreshold = 9999 } },
+          },
+        },
+      })
+      vim.lsp.enable 'jdtls'
+    end,
+  },
+
+  -- Flix (needs java 21+ and flix.jar in project root)
+  {
+    'flix/nvim',
+    ft = 'flix',
+    init = function()
+      -- plugin registers the filetype in plugin/flix.lua, which lazy-loading
+      -- skips, so ft = 'flix' would never trigger without this
+      vim.filetype.add { extension = { flix = 'flix' } }
+    end,
+    config = function()
+      require('flix').setup()
+      vim.lsp.enable 'flix'
+    end,
+    keys = {
+      {
+        '<leader>lfr',
+        function()
+          require('flix.commands').flix_cmd 'run'
+        end,
+        desc = '(F)lix (R)un',
+        ft = 'flix',
+      },
+      {
+        '<leader>lft',
+        function()
+          require('flix.commands').flix_cmd 'test'
+        end,
+        desc = '(F)lix (T)est',
+        ft = 'flix',
+      },
+    },
+  },
+
+  -- Scala
+  {
+    'scalameta/nvim-metals',
+    dependencies = { 'nvim-lua/plenary.nvim', 'mfussenegger/nvim-dap' },
+    -- no 'java' here, jdtls owns those buffers
+    ft = { 'scala', 'sbt' },
+    opts = function()
+      local metals_config = require('metals').bare_config()
+      metals_config.settings = {
+        showImplicitArguments = true,
+        showInferredType = true,
+        excludedPackages = { 'akka.actor.typed.javadsl', 'com.github.swagger.akka.javadsl' },
+      }
+      metals_config.init_options.statusBarProvider = 'off'
+      metals_config.capabilities = require('blink.cmp').get_lsp_capabilities()
+      metals_config.on_attach = function()
+        require('metals').setup_dap()
+      end
+      return metals_config
+    end,
+    config = function(self, metals_config)
+      local group = vim.api.nvim_create_augroup('nvim-metals', { clear = true })
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = self.ft,
+        callback = function()
+          require('metals').initialize_or_attach(metals_config)
+        end,
+        group = group,
+      })
+    end,
+    keys = {
+      {
+        '<leader>lsc',
+        function()
+          require('metals').commands()
+        end,
+        desc = '(S)cala Metals (C)ommands',
+        ft = { 'scala', 'sbt' },
+      },
+      {
+        '<leader>lsw',
+        function()
+          require('metals').hover_worksheet()
+        end,
+        desc = '(S)cala (W)orksheet hover',
+        ft = { 'scala', 'sbt' },
+      },
+    },
+  },
 }

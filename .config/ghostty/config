@@ -16,14 +16,20 @@ window-theme = ghostty
 window-padding-y = 16
 window-padding-x = 16
 
-keybind = alt+one=unbind
-keybind = alt+two=unbind
-keybind = alt+three=unbind
-keybind = alt+four=unbind
+keybind = alt+digit_1=unbind
+keybind = alt+digit_2=unbind
+keybind = alt+digit_3=unbind
+keybind = alt+digit_4=unbind
 keybind = alt+five=unbind
 keybind = alt+six=unbind
 keybind = alt+seven=unbind
 keybind = alt+eight=unbind
 keybind = alt+nine=unbind
+
+
+keybind = ctrl+digit_1=goto_tab:1
+keybind = ctrl+digit_2=goto_tab:2
+keybind = ctrl+digit_3=goto_tab:3
+keybind = ctrl+digit_4=goto_tab:4
 
 keybind = alt+w=toggle_window_decorations

@@ -23,10 +23,10 @@ function prj --description "Project jumper"
 
     if in_tmux
         if not tmux has-session -t $sessname 2>/dev/null 
-            tmux new -d -s $sessname tmux_dev
+            tmux new-session -d -s $sessname tmux_dev
         end
-        tmux switch -t $sessname 
+        tmux switch-client -t $sessname 
     else
-        tmux attach -t $sessname || tmux new -s $sessname tmux_dev
+        tmux attach-session -t $sessname || tmux new-session -s $sessname tmux_dev
     end
 end

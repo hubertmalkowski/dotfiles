@@ -3,9 +3,9 @@ function notes
     set -l sessname "notes"
 
     if in_tmux
-        tmux switch -t $sessname || tmux new -d -s $sessname -c ~/Okieneczko/ "nvim hello.md"
-        tmux switch -t $sessname
+        tmux switch-client -t $sessname || tmux new-session -d -s $sessname -c ~/Documents/notatki/ "nvim ."
+        tmux switch-client -t $sessname
     else
-        tmux attach -t $sessname || tmux new -s $sessname -c ~/Okieneczko/ "nvim hello.md"
+        tmux attach-session -t $sessname || tmux new-session -s $sessname -c ~/Documents/notatki/ "nvim ."
     end
 end

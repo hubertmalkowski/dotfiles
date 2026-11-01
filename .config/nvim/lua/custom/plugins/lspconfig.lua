@@ -491,6 +491,7 @@ return {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'ruff', -- Used to format Python code
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
       vim.api.nvim_create_autocmd('FileType', {
@@ -545,6 +546,10 @@ return {
           }
         end,
       })
+
+      -- koka isn't on Mason; uses the system `koka` binary and lspconfig's lsp/koka.lua
+      vim.lsp.config('koka', { capabilities = capabilities })
+      vim.lsp.enable 'koka'
 
       require('mason-lspconfig').setup {
         ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)

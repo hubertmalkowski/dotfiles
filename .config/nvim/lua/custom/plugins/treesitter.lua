@@ -9,26 +9,40 @@ return {
       local ts = require 'nvim-treesitter'
       ts.setup {}
 
-      -- Rocq (formerly Coq): not in the nvim-treesitter registry, add it by hand
-      local function register_rocq()
-        require('nvim-treesitter.parsers').rocq = {
-          install_info = {
-            url = 'https://github.com/aruzdh/tree-sitter-rocq',
-            revision = '300fe33fc299c30f736fd56d8ef8a28b08acd4e6',
-            queries = 'queries',
-          },
-          tier = 0,
-        }
+      -- parsers not in the nvim-treesitter registry, add them by hand
+      local custom_parsers = {
+        -- Rocq (formerly Coq)
+        rocq = {
+          url = 'https://github.com/aruzdh/tree-sitter-rocq',
+          revision = '300fe33fc299c30f736fd56d8ef8a28b08acd4e6',
+        },
+        koka = {
+          url = 'https://github.com/koka-community/tree-sitter-koka',
+          revision = '07b1ce29a06656b552f7f198e572499062ccfffe',
+        },
+        flix = {
+          url = 'https://github.com/wstein/tree-sitter-flix',
+          revision = '349e4d3d23c71bd13e4e414b708714e5ca3c78b2',
+        },
+      }
+      local function register_custom_parsers()
+        local parsers = require 'nvim-treesitter.parsers'
+        for lang, info in pairs(custom_parsers) do
+          parsers[lang] = {
+            install_info = vim.tbl_extend('force', { queries = 'queries' }, info),
+            tier = 0,
+          }
+        end
       end
-      vim.api.nvim_create_autocmd('User', { pattern = 'TSUpdate', callback = register_rocq })
-      pcall(register_rocq)
+      vim.api.nvim_create_autocmd('User', { pattern = 'TSUpdate', callback = register_custom_parsers })
+      pcall(register_custom_parsers)
 
       -- `.v` files are filetype `coq` (Coqtail/vsrocq expect that), parser is `rocq`
       vim.treesitter.language.register('rocq', 'coq')
 
       -- main branch dropped ensure_installed/auto_install, do it by hand
       local ensure_installed =
-        { 'bash', 'c', 'diff', 'haskell', 'html', 'lua', 'luadoc', 'query', 'rocq', 'vim', 'vimdoc' }
+        { 'bash', 'c', 'diff', 'flix', 'haskell', 'html', 'lua', 'koka', 'luadoc', 'query', 'rocq', 'scala', 'vim', 'vimdoc' }
       local installed = ts.get_installed 'parsers'
       local missing = vim.tbl_filter(function(lang)
         return not vim.list_contains(installed, lang)

@@ -7,6 +7,27 @@ return {
       local lint = require 'lint'
       lint.linters_by_ft = {
         -- markdown = { 'markdownlint' },
+        java = { 'checkstyle' },
+      }
+
+      -- Use the project's own checkstyle config (checkstyle*.xml in project root
+      -- or config/checkstyle/checkstyle.xml). Skip linting when there is none.
+      local function checkstyle_config(bufnr)
+        local root = vim.fs.root(bufnr, { 'pom.xml', 'build.gradle', 'build.gradle.kts', 'settings.gradle', '.git' })
+        if not root then
+          return nil
+        end
+        local candidates = vim.fn.glob(root .. '/checkstyle*.xml', false, true)
+        vim.list_extend(candidates, vim.fn.glob(root .. '/config/checkstyle/checkstyle.xml', false, true))
+        return candidates[1]
+      end
+      lint.linters.checkstyle.args = {
+        '-f',
+        'sarif',
+        '-c',
+        function()
+          return checkstyle_config(0)
+        end,
       }
 
       -- To allow other plugins to add linters to require('lint').linters_by_ft,
@@ -46,7 +67,10 @@ return {
       local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
       vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
         group = lint_augroup,
-        callback = function()
+        callback = function(args)
+          if vim.bo[args.buf].filetype == 'java' and not checkstyle_config(args.buf) then
+            return
+          end
           lint.try_lint()
         end,
       })

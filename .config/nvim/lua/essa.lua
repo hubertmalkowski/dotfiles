@@ -4,7 +4,7 @@ vim.filetype.add { extension = { essa = 'essa' } }
 local function register()
   require('nvim-treesitter.parsers').essa = {
     install_info = {
-      path = '/home/hubert/Dev/projects/essa/tree-sitter',
+      path = '/home/hubert/Dev/projects/essa/tree-sitter-essa',
       queries = 'queries',
     },
     tier = 0,
